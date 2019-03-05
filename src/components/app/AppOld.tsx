@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import logo from '../../logo.svg';
 import './App.css';
-import { Config } from './utils/configUtil'
+import { Config } from '../../utils/configUtil'
 
-class App extends Component {
+class AppOld extends Component {
   
   render() {
     return (
@@ -29,4 +29,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default AppOld;
