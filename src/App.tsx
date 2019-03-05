@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { Config } from './utils/configUtil'
 
 class App extends Component {
+  
   render() {
     return (
       <div className="App">
@@ -19,6 +21,8 @@ class App extends Component {
           >
             Learn React
           </a>
+          <div>mode:{Config.NODE_ENV}</div>
+          <div>apikey:{Config.API_KEY}</div>
         </header>
       </div>
     );
