@@ -1,9 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './app';
+import DrawerLayout, { Links } from './drawerLayout';
 
 it('クラッシュすることなくレンダリングができること', () => {
   const div = document.createElement('div');
-  ReactDOM.render(<App />, div);
+  const contents : JSX.Element = <div />;
+  const links : Links[] = [];
+  ReactDOM.render(<DrawerLayout contents={contents} links={links} />, div);
   ReactDOM.unmountComponentAtNode(div);
 });
