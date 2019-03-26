@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './sampleContent1Styles';
+import styles from './helloStyles';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import Typography from '@material-ui/core/Typography';
 
@@ -12,7 +12,7 @@ type State = {
 };
 
 /** コンポーネント定義 */
-class SampleContent1 extends React.Component<Prop, State> {
+class Hello extends React.Component<Prop, State> {
 
   /** コンストラクタ */
   constructor(props : Prop)
@@ -58,4 +58,4 @@ class SampleContent1 extends React.Component<Prop, State> {
 }
 
 /** テーマとスタイルをプロパティに含めて返却 */
-export default withStyles(styles, { withTheme : true })(SampleContent1);
+export default withStyles(styles, { withTheme : true })(Hello);

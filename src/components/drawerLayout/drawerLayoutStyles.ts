@@ -11,9 +11,8 @@ const styles = (theme : Theme) =>
     drawer: {
       [theme.breakpoints.up('sm')]: {
         width: drawerWidth,
-        flexShrink: 0,
-      },
-      zIndex : 0
+        flexShrink: 0
+      }
     },
     appBar: {
       [theme.breakpoints.up('sm')]: {
@@ -34,6 +33,7 @@ const styles = (theme : Theme) =>
     toolbar: theme.mixins.toolbar,
     drawerPaper: {
       width: drawerWidth,
+      zIndex : 0
     },
     content: {
       flexGrow: 1,

@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import SampleContent3 from './sampleContent3';
+import Works from './works';
 
 it('クラッシュすることなくレンダリングができること', () => {
   const div = document.createElement('div');
-  ReactDOM.render(<SampleContent3 />, div);
+  ReactDOM.render(<Works />, div);
   ReactDOM.unmountComponentAtNode(div);
 });

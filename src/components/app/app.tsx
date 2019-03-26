@@ -4,9 +4,9 @@ import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import Mail from '@material-ui/icons/Mail';
 import withRoot from '../../withRoot';
 import DrawerLayout, { Links } from '../drawerLayout/drawerLayout';
-import SampleContent1 from '../sampleContent1/sampleContent1';
-import SampleContent2 from '../sampleContent2/sampleContent2';
-import SampleContent3 from '../sampleContent3/sampleContent3';
+import Hello from '../hello/hello';
+import Skills from '../skills/skills';
+import Works from '../works/works';
 import './app.css';
 
 /** プロパティ型定義 */
@@ -19,9 +19,6 @@ type State = {
   links : Links[]
 };
 
-/** ナビゲーションで切り替えるコンポーネントの一覧 */
-type componentNames = 'sampleContent1' | 'sampleContent2' | 'sampleContent3';
-
 /** コンポーネント定義 */
 class App extends React.Component<Prop, State> {
 
@@ -32,7 +29,7 @@ class App extends React.Component<Prop, State> {
 
     // ステート初期化
     this.state = {
-      contents : <SampleContent1 />,
+      contents : <Hello />,
       links : this.staticLinks
     };
   }
@@ -41,27 +38,30 @@ class App extends React.Component<Prop, State> {
   staticLinks : Links[] = [
     [
       {
-        text : 'sampleContent1',
+        text : '自己紹介',
         icon : <Mail />,
         click : (event) => {
-          this.setState({ contents : <SampleContent1 /> });
-        }
+          this.setState({ contents : <Hello /> });
+        },
+        closeMenuAfterClick : true
       },
       {
-        text : 'sampleContent2',
+        text : '技術',
         icon : <Mail />,
         click : (event) => {
-          this.setState({ contents : <SampleContent2 /> });
-        }
+          this.setState({ contents : <Skills /> });
+        },
+        closeMenuAfterClick : true
       }
     ],
     [
       {
-        text : 'sampleContent3',
+        text : '開発実績',
         icon : <Mail />,
         click : (event) => {
-          this.setState({ contents : <SampleContent3 /> });
-        }
+          this.setState({ contents : <Works /> });
+        },
+        closeMenuAfterClick : true
       }
     ]
   ];

@@ -21,7 +21,9 @@ export type Link = {
   /** 表示アイコン */
   icon? : JSX.Element | undefined,
   /** クリックイベント */
-  click? : ((event : React.MouseEvent<HTMLElement, MouseEvent>) => void) | undefined
+  click? : ((event : React.MouseEvent<HTMLElement, MouseEvent>) => void) | undefined,
+  /** クリック後にナビゲーションを閉じるか否か */
+  closeMenuAfterClick? : boolean | false
 };
 
 /** ナビゲーションリンク配列 */
@@ -59,6 +61,14 @@ class DrawerLayout extends React.Component<Prop, State> {
     this.setState(state => ({ mobileOpen: !state.mobileOpen }));
   };
 
+  /** ナビゲーションクリック */ 
+  handleClick = (callBack? : (event : React.MouseEvent<HTMLElement, MouseEvent>) => void | undefined, closeMenuAfterClick? : boolean | false) => {
+    return (event : React.MouseEvent<HTMLElement, MouseEvent>) => { 
+      if(callBack) callBack(event);
+      if(closeMenuAfterClick) this.setState({ mobileOpen: false });
+    };
+  }
+
   num : number = 0;
 
   /** Drawer内のLinkコントロールを生成 */
@@ -72,7 +82,7 @@ class DrawerLayout extends React.Component<Prop, State> {
         <List>
           {links.map((link : Link) => {
             return (
-              <ListItem button key={link.text} onClick={ link.click } >
+              <ListItem button key={link.text} onClick={ this.handleClick(link.click, link.closeMenuAfterClick) } >
                 {(link.icon !== undefined)? <ListItemIcon>{link.icon}</ListItemIcon> : <React.Fragment />}
                 <ListItemText primary={link.text} />
               </ListItem>
