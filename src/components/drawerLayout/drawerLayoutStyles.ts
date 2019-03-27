@@ -6,7 +6,7 @@ const drawerWidth = 240;
 const styles = (theme : Theme) => 
   createStyles({
     root: {
-      display: 'flex',
+      display: 'flex'
     },
     drawer: {
       [theme.breakpoints.up('sm')]: {
@@ -28,7 +28,8 @@ const styles = (theme : Theme) =>
     title:{
       [theme.breakpoints.up('sm')]: {
         margin : '0 auto',
-      }
+      },
+      fontFamily : 'Montserrat,' + theme.typography.fontFamily
     },
     toolbar: theme.mixins.toolbar,
     drawerPaper: {

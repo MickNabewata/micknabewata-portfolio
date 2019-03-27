@@ -28,30 +28,34 @@ class Hello extends React.Component<Prop, State> {
   render() {
     return (
         <React.Fragment>
-            <Typography paragraph>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua. Rhoncus dolor purus non enim praesent
-            elementum facilisis leo vel. Risus at ultrices mi tempus imperdiet. Semper risus in
-            hendrerit gravida rutrum quisque non tellus. Convallis convallis tellus id interdum
-            velit laoreet id donec ultrices. Odio morbi quis commodo odio aenean sed adipiscing.
-            Amet nisl suscipit adipiscing bibendum est ultricies integer quis. Cursus euismod quis
-            viverra nibh cras. Metus vulputate eu scelerisque felis imperdiet proin fermentum leo.
-            Mauris commodo quis imperdiet massa tincidunt. Cras tincidunt lobortis feugiat vivamus
-            at augue. At augue eget arcu dictum varius duis at consectetur lorem. Velit sed
-            ullamcorper morbi tincidunt. Lorem donec massa sapien faucibus et molestie ac.
-            </Typography>
-            <Typography paragraph>
-            Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper eget nulla
-            facilisi etiam dignissim diam. Pulvinar elementum integer enim neque volutpat ac
-            tincidunt. Ornare suspendisse sed nisi lacus sed viverra tellus. Purus sit amet volutpat
-            consequat mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis risus
-            sed vulputate odio. Morbi tincidunt ornare massa eget egestas purus viverra accumsan in.
-            In hendrerit gravida rutrum quisque non tellus orci ac. Pellentesque nec nam aliquam sem
-            et tortor. Habitant morbi tristique senectus et. Adipiscing elit duis tristique
-            sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis eleifend. Commodo
-            viverra maecenas accumsan lacus vel facilisis. Nulla posuere sollicitudin aliquam
-            ultrices sagittis orci a.
-            </Typography>
+          <Typography component="h1" variant="h4" gutterBottom className={this.props.classes.title}>
+            Simple is the Best
+          </Typography>
+          <br />
+          <Typography variant="body1" gutterBottom>
+            当サイトへご訪問頂きありがとうございます。
+          </Typography>
+          <Typography variant="body1" gutterBottom>
+            私は業務アプリケーション開発とOffice 365を得意とする34歳エンジニア♂です。
+          </Typography>
+          <Typography variant="body1" gutterBottom>
+            正社員として勤務する傍ら、システム構築の楽しさと
+          </Typography>
+          <Typography variant="body1" gutterBottom>
+            新しい技術を活かす機会とお金を求めて副業をしています。
+          </Typography>
+          <Typography variant="body1" gutterBottom>
+            好きな技術はSPAとAPIとSharePointです。
+          </Typography>
+          <Typography variant="body1" gutterBottom>
+            好きな業務はIT化の相談に乗ってシンプルな業務とシステムを描くことです。
+          </Typography>
+          <Typography variant="body1" gutterBottom>
+            今日も元気にシンプルに。
+          </Typography>
+          <Typography variant="body1" gutterBottom>
+            世界はシンプルさを求めています。（たぶん
+          </Typography>
         </React.Fragment>
     );
   }

@@ -1,13 +1,15 @@
 import React from 'react';
 import styles from './appStyles';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
-import Mail from '@material-ui/icons/Mail';
+import AccountBox from '@material-ui/icons/AccountBox';
+import Stars from '@material-ui/icons/Stars';
+import Work from '@material-ui/icons/Work';
+import Wallpaper from '@material-ui/icons/Wallpaper';
 import withRoot from '../../withRoot';
 import DrawerLayout, { Links } from '../drawerLayout/drawerLayout';
 import Hello from '../hello/hello';
 import Skills from '../skills/skills';
 import Works from '../works/works';
-import './app.css';
 
 /** プロパティ型定義 */
 interface Prop extends WithStyles<typeof styles> {
@@ -39,7 +41,7 @@ class App extends React.Component<Prop, State> {
     [
       {
         text : '自己紹介',
-        icon : <Mail />,
+        icon : <AccountBox />,
         click : (event) => {
           this.setState({ contents : <Hello /> });
         },
@@ -47,18 +49,25 @@ class App extends React.Component<Prop, State> {
       },
       {
         text : '技術',
-        icon : <Mail />,
+        icon : <Stars />,
         click : (event) => {
           this.setState({ contents : <Skills /> });
         },
         closeMenuAfterClick : true
-      }
-    ],
-    [
+      },
       {
         text : '開発実績',
-        icon : <Mail />,
+        icon : <Work />,
         click : (event) => {
+          this.setState({ contents : <Works /> });
+        },
+        closeMenuAfterClick : true
+      },
+      {
+        text : 'ブログ',
+        icon : <Wallpaper />,
+        click : (event) => {
+          window.open('https://www.micknabewata.com/');
           this.setState({ contents : <Works /> });
         },
         closeMenuAfterClick : true

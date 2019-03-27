@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './worksStyles';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
+import WorkCard from '../workCard/workCard';
 import Typography from '@material-ui/core/Typography';
 
 /** プロパティ型定義 */
@@ -28,9 +29,9 @@ class Works extends React.Component<Prop, State> {
   render() {
     return (
         <React.Fragment>
-            <Typography paragraph>
-              Sample Content 3
-            </Typography>
+          <WorkCard />
+          <WorkCard />
+          <WorkCard />
         </React.Fragment>
     );
   }
