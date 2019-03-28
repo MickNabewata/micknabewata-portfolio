@@ -21,8 +21,7 @@ function theme() : Theme {
       useNextVariants: true,
       fontFamily:[
         '"M PLUS Rounded 1c"', 'Roboto', 'Helvetica', 'Arial', 'sans-serif'
-      ].join(','),
-      fontSize : 17
+      ].join(',')
     }
   });
 }

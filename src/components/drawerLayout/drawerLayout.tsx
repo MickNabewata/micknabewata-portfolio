@@ -84,7 +84,7 @@ class DrawerLayout extends React.Component<Prop, State> {
             return (
               <ListItem button key={link.text} onClick={ this.handleClick(link.click, link.closeMenuAfterClick) } >
                 {(link.icon !== undefined)? <ListItemIcon>{link.icon}</ListItemIcon> : <React.Fragment />}
-                <ListItemText primary={link.text} />
+                <ListItemText primary={link.text} disableTypography={true} className={this.props.classes.linkText} />
               </ListItem>
             )
           })}
@@ -104,6 +104,11 @@ class DrawerLayout extends React.Component<Prop, State> {
         })}
       </div>
     );
+  }
+
+  /** タイトルを取得 */
+  getSiteTitle() : string {
+    return 'MickNabewata\'s portfolio';
   }
 
   /** レンダリング */
@@ -127,8 +132,8 @@ class DrawerLayout extends React.Component<Prop, State> {
               <MenuIcon />
             </IconButton>
             {/* タイトル文言 */}
-            <Typography variant='h6' color='inherit' className={this.props.classes.title} noWrap>
-              MickNabewata's portfolio
+            <Typography color='inherit' className={this.props.classes.title} noWrap>
+              {this.getSiteTitle()}
             </Typography>
           </Toolbar>
         </AppBar>
@@ -137,11 +142,9 @@ class DrawerLayout extends React.Component<Prop, State> {
             画面幅が狭い場合に表示するDrawer
             SEO対策(重複コンテンツの回避)を行いたい場合には、この部分をJavaScriptで記述します。
           */}
-          <Hidden smUp implementation='css'>
+          <Hidden mdUp implementation='css'>
             <Drawer
-              //container={this.props.container}
               variant='temporary'
-              //anchor={theme.direction === 'rtl' ? 'right' : 'left'}
               anchor='left'
               open={this.state.mobileOpen}
               onClose={this.handleDrawerToggle}
@@ -156,7 +159,7 @@ class DrawerLayout extends React.Component<Prop, State> {
             画面幅が広い場合に表示するDrawer
             SEO対策(重複コンテンツの回避)を行いたい場合には、この部分をJavaScriptで記述します。
           */}
-          <Hidden xsDown implementation='css'>
+          <Hidden smDown implementation='css'>
             <Drawer
               classes={{
                 paper: this.props.classes.drawerPaper,

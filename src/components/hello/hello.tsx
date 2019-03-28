@@ -24,38 +24,56 @@ class Hello extends React.Component<Prop, State> {
     };
   }
 
+  /** タイトル取得 */
+  getTitle() : string {
+    return 'Simple is the Best';
+  }
+
+  /** メッセージ取得 */
+  getHello() : string[] {
+    return [
+      '当サイトへご訪問頂きありがとうございます。',
+      '私は業務アプリケーション開発とOffice 365を得意とする34歳エンジニア♂です。',
+      '正社員として勤務する傍ら、システム構築の楽しさと',
+      '新しい技術を活かす機会とお金を求めて副業をしています。',
+      '好きな技術はSPAとAPIとSharePointです。',
+      '好きな業務はIT化の相談に乗ってシンプルな業務とシステムを描くことです。',
+      '今日も元気にシンプルに。',
+      '世界はシンプルさを求めています。（たぶん'
+    ];
+  }
+
+  /** タイトル要素生成 */
+  createTitle() : JSX.Element {
+    return (
+      <Typography component='h1' gutterBottom className={this.props.classes.title}>
+        { this.getTitle() }
+      </Typography>
+    );
+  }
+
+  /** 自己紹介要素生成 */
+  createHello() : JSX.Element {
+    let num : number = 0;
+    return (
+      <React.Fragment>
+        {
+          this.getHello().map((hello : string) => {
+            num++;
+            return <Typography key={num} component='p' gutterBottom className={this.props.classes.hello}>{hello}</Typography>
+          })
+        }
+      </React.Fragment>
+    );
+  }
+
   /** レンダリング */
   render() {
     return (
         <React.Fragment>
-          <Typography component="h1" variant="h4" gutterBottom className={this.props.classes.title}>
-            Simple is the Best
-          </Typography>
+          { this.createTitle() }
           <br />
-          <Typography variant="body1" gutterBottom>
-            当サイトへご訪問頂きありがとうございます。
-          </Typography>
-          <Typography variant="body1" gutterBottom>
-            私は業務アプリケーション開発とOffice 365を得意とする34歳エンジニア♂です。
-          </Typography>
-          <Typography variant="body1" gutterBottom>
-            正社員として勤務する傍ら、システム構築の楽しさと
-          </Typography>
-          <Typography variant="body1" gutterBottom>
-            新しい技術を活かす機会とお金を求めて副業をしています。
-          </Typography>
-          <Typography variant="body1" gutterBottom>
-            好きな技術はSPAとAPIとSharePointです。
-          </Typography>
-          <Typography variant="body1" gutterBottom>
-            好きな業務はIT化の相談に乗ってシンプルな業務とシステムを描くことです。
-          </Typography>
-          <Typography variant="body1" gutterBottom>
-            今日も元気にシンプルに。
-          </Typography>
-          <Typography variant="body1" gutterBottom>
-            世界はシンプルさを求めています。（たぶん
-          </Typography>
+          { this.createHello() }
         </React.Fragment>
     );
   }

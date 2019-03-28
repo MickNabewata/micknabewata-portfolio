@@ -9,25 +9,29 @@ const styles = (theme : Theme) =>
       display: 'flex'
     },
     drawer: {
-      [theme.breakpoints.up('sm')]: {
+      [theme.breakpoints.up('md')]: {
         width: drawerWidth,
         flexShrink: 0
       }
     },
     appBar: {
-      [theme.breakpoints.up('sm')]: {
+      [theme.breakpoints.up('md')]: {
         width:'100%',
       },
     },
     menuButton: {
       marginRight: 20,
-      [theme.breakpoints.up('sm')]: {
+      [theme.breakpoints.up('md')]: {
         display: 'none',
       },
     },
     title:{
-      [theme.breakpoints.up('sm')]: {
+      [theme.breakpoints.up('md')]: {
         margin : '0 auto',
+        fontSize : 30
+      },
+      [theme.breakpoints.down('sm')]: {
+        fontSize : 20
       },
       fontFamily : 'Montserrat,' + theme.typography.fontFamily
     },
@@ -39,6 +43,9 @@ const styles = (theme : Theme) =>
     content: {
       flexGrow: 1,
       padding: theme.spacing.unit * 3,
+    },
+    linkText : {
+      fontSize : 14
     }
   });
 
