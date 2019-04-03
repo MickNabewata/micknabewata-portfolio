@@ -40,7 +40,7 @@ class App extends React.Component<Prop, State> {
   staticLinks : Links[] = [
     [
       {
-        text : '自己紹介2',
+        text : '自己紹介',
         icon : <AccountBox />,
         click : (event) => {
           this.setState({ contents : <Hello /> });

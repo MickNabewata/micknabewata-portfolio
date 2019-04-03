@@ -13,6 +13,12 @@ const styles = (theme : Theme) =>
       fontFamily : 'Montserrat,' + theme.typography.fontFamily
     },
     hello : {
+      [theme.breakpoints.down('sm')] : {
+        fontSize : 15
+      },
+      [theme.breakpoints.up('md')] : {
+        fontSize : 20
+      },
     }
   });
 

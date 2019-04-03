@@ -9,6 +9,7 @@ const styles = (theme : Theme) =>
         maxWidth : 'calc((100% - ' + theme.spacing.unit * 6 + 'px) / 3)'
       },
       [theme.breakpoints.down('sm')]:{
+        width : '100%',
         maxWidth : 'calc(100%)',
       },
       margin : theme.spacing.unit,

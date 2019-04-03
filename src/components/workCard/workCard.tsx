@@ -9,6 +9,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import { Url } from 'url';
 
 /** プロパティ型定義 */
 interface Prop extends WithStyles<typeof styles> {
@@ -17,6 +18,22 @@ interface Prop extends WithStyles<typeof styles> {
 /** ステート型定義 */
 type State = {
 };
+
+/** 開発実績型定義 */
+type Work = {
+  /** 技術 */
+  Skill : string[],
+  /** 役割 */
+  Rolle : String[],
+  /** 人数 */
+  Members : Number,
+  /** URL */
+  URL : Url,
+  /** GitHub */
+  GitHub : Url,
+  /** 概要(1要素ずつ改行表示) */
+  Overview : string[]
+}
 
 /** コンポーネント定義 */
 class WorkCard extends React.Component<Prop, State> {
@@ -29,6 +46,12 @@ class WorkCard extends React.Component<Prop, State> {
     // ステート初期化
     this.state = {
     };
+  }
+
+  /** 開発実績を取得 */
+  getWorks() : Work[]
+  {
+    return [];
   }
 
   /** レンダリング */
