@@ -64,7 +64,7 @@ class WorkCard extends React.Component<Prop, State> {
           <Typography component='h2' variant='h5' gutterBottom >
             {this.props.workInfo.Name}
           </Typography>
-          <Paper elevation={0}>
+          <Paper elevation={0} className={this.props.classes.cardSection} >
             <Typography component="h3" variant="h6">
               技術
             </Typography>
@@ -72,7 +72,7 @@ class WorkCard extends React.Component<Prop, State> {
               {this.props.workInfo.Skill}
             </Typography>
           </Paper>
-          <Paper elevation={0}>
+          <Paper elevation={0} className={this.props.classes.cardSection}>
             <Typography component="h3" variant="h6">
               役割
             </Typography>
@@ -80,7 +80,7 @@ class WorkCard extends React.Component<Prop, State> {
               {this.props.workInfo.Role}
             </Typography>
           </Paper>
-          <Paper elevation={0}>
+          <Paper elevation={0} className={this.props.classes.cardSection}>
             <Typography component="h3" variant="h6">
               人数
             </Typography>
@@ -88,7 +88,7 @@ class WorkCard extends React.Component<Prop, State> {
               {this.props.workInfo.Members}
             </Typography>
           </Paper>
-          <Paper elevation={0}>
+          <Paper elevation={0} className={this.props.classes.cardSection}>
             <Typography component="h3" variant="h6">
               URL
             </Typography>
@@ -96,7 +96,7 @@ class WorkCard extends React.Component<Prop, State> {
               {this.props.workInfo.URL}
             </Typography>
           </Paper>
-          <Paper elevation={0}>
+          <Paper elevation={0} className={this.props.classes.cardSection}>
             <Typography component="h3" variant="h6">
               GitHub
             </Typography>
@@ -104,7 +104,7 @@ class WorkCard extends React.Component<Prop, State> {
               {this.props.workInfo.GitHub}
             </Typography>
           </Paper>
-          <Paper elevation={0}>
+          <Paper elevation={0} className={this.props.classes.cardSection}>
             <Typography component="h3" variant="h6">
               概要
             </Typography>
@@ -117,7 +117,7 @@ class WorkCard extends React.Component<Prop, State> {
             })}
           </Paper>
         </CardContent>
-        <CardActions>
+        <CardActions className={this.props.classes.cardActions}>
           <Button size='small' className={this.props.classes.cardButton} >詳細</Button>
         </CardActions>
       </Card>

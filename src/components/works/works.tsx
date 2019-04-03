@@ -36,7 +36,7 @@ class Works extends React.Component<Prop, State> {
         Members : 1,
         URL : 'http://google.co.jp',
         GitHub : 'http://yahoo.co.jp',
-        Overview : ['行1','行2','','行3', '']
+        Overview : ['行1','行2','','行3']
       },
       {
         ImageUrl : 'http://pet-seikatsu.jp/images/2015/08/2d85d2a2063d1ed3b3271144167cdf85-large.jpg',

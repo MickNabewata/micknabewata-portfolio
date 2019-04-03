@@ -7,7 +7,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 function theme() : Theme {
   return createMuiTheme({
     palette: {
-      primary: primaryColor,
+      primary:  primaryColor,
       text: {
         primary : '#2c2c2c',
         secondary : 'white'

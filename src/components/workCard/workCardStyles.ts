@@ -14,14 +14,24 @@ const styles = (theme : Theme) =>
       },
       margin : theme.spacing.unit,
       float : 'left',
-      height : '620px'
+      height : '640px'
     },
     media : {
-      height : 140
+      height : 100
     },
     cardButton : {
+      width : 'calc(100% - 30px)',
+      margin : '0 auto',
       backgroundColor : theme.palette.primary.main,
-      color : theme.palette.text.secondary
+      color : theme.palette.text.secondary,
+      '&:hover' : {
+        backgroundColor : theme.palette.primary.dark
+      }
+    },
+    cardSection : {
+      marginTop : '10px'
+    },
+    cardActions : {
     }
   });
 
