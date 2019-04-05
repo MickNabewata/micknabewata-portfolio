@@ -11,7 +11,9 @@ import Typography from '@material-ui/core/Typography';
 
 /** プロパティ型定義 */
 interface Prop extends WithStyles<typeof styles> {
-  workInfo : Work
+  workInfo : Work,
+  skillClickHandler : (value : string) => (e : React.MouseEvent<HTMLElement, MouseEvent>) => void,
+  roleClickHandler : (value : string) => (e : React.MouseEvent<HTMLElement, MouseEvent>) => void
 }
 
 /** ステート型定義 */
@@ -27,7 +29,7 @@ export type Work = {
   /** 技術 */
   Skill : string[],
   /** 役割 */
-  Role : String[],
+  Role : string[],
   /** 人数 */
   Members : Number,
   /** URL */
@@ -60,7 +62,7 @@ class WorkCard extends React.Component<Prop, State> {
           image={this.props.workInfo.ImageUrl}
           title={this.props.workInfo.Name}
         />
-        <CardContent className={this.props.classes.cardContent} >
+        <CardContent>
           <Typography component='h2' variant='h5' gutterBottom >
             {this.props.workInfo.Name}
           </Typography>
@@ -69,18 +71,37 @@ class WorkCard extends React.Component<Prop, State> {
               技術
             </Typography>
             <Typography component="p">
-              {this.props.workInfo.Skill}
+              {this.props.workInfo.Skill.slice(0, 3).map((skill) => {
+                return (
+                  <Button color='primary' className={this.props.classes.filterButton} onClick={this.props.skillClickHandler(skill)}>
+                    {skill}
+                  </Button>
+                );
+              })}
+              {
+                (this.props.workInfo.Skill.length > 2)?
+                <Button color='secondary' className={this.props.classes.filterButton} >
+                  ...
+                </Button> : 
+                null
+              }
             </Typography>
           </Paper>
-          <Paper elevation={0} className={this.props.classes.cardSection}>
+          <Paper elevation={0} className={this.props.classes.cardSection + ',' + this.props.classes.noMarginTop}>
             <Typography component="h3" variant="h6">
               役割
             </Typography>
             <Typography component="p">
-              {this.props.workInfo.Role}
+              {this.props.workInfo.Role.slice(0, 3).map((role) => {
+                return (
+                  <Button color='primary' className={this.props.classes.filterButton} onClick={this.props.roleClickHandler(role)}>
+                    {role}
+                  </Button>
+                );
+              })}
             </Typography>
           </Paper>
-          <Paper elevation={0} className={this.props.classes.cardSection}>
+          <Paper elevation={0} className={this.props.classes.cardSection + ',' + this.props.classes.noMarginTop}>
             <Typography component="h3" variant="h6">
               人数
             </Typography>

@@ -1,13 +1,15 @@
 import * as React from 'react';
 import { MuiThemeProvider, createMuiTheme, Theme } from '@material-ui/core/styles';
 import primaryColor from '@material-ui/core/colors/indigo';
+import secondaryColor from '@material-ui/core/colors/grey';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 /** アプリケーション全体に適用するテーマ */
 function theme() : Theme {
   return createMuiTheme({
-    palette: {
-      primary:  primaryColor,
+    palette : {
+      primary :  primaryColor,
+      secondary : secondaryColor,
       text: {
         primary : '#2c2c2c',
         secondary : '#6c6c6c'

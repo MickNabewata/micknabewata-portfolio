@@ -1,6 +1,5 @@
 import { Theme } from '@material-ui/core/styles/createMuiTheme';
 import createStyles from '@material-ui/core/styles/createStyles';
-import { callbackify } from 'util';
 
 const styles = (theme : Theme) => 
   createStyles({
@@ -14,16 +13,23 @@ const styles = (theme : Theme) =>
       },
       margin : theme.spacing.unit,
       float : 'left',
-      height : '640px'
+      height : '580px'
     },
     media : {
-      height : 100
-    },
-    cardContent : {
-      height : '480px'
+      height : '100px'
     },
     cardSection : {
       marginTop : '10px'
+    },
+    filterButton : {
+      margin: 0,
+      fontSize : '13px',
+      minWidth : 'auto',
+      lineHeight : 'normal',
+      textDecoration : 'underline'
+    },
+    noMarginTop : {
+      marginTop : '5px !important'
     }
   });
 

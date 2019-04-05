@@ -30,6 +30,9 @@ const styles = (theme : Theme) =>
     },
     contents : {
 
+    },
+    noResults : {
+      marginTop : '20px'
     }
   });
 
