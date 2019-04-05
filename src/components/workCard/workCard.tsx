@@ -60,7 +60,7 @@ class WorkCard extends React.Component<Prop, State> {
           image={this.props.workInfo.ImageUrl}
           title={this.props.workInfo.Name}
         />
-        <CardContent>
+        <CardContent className={this.props.classes.cardContent} >
           <Typography component='h2' variant='h5' gutterBottom >
             {this.props.workInfo.Name}
           </Typography>
@@ -117,9 +117,6 @@ class WorkCard extends React.Component<Prop, State> {
             })}
           </Paper>
         </CardContent>
-        <CardActions className={this.props.classes.cardActions}>
-          <Button size='small' className={this.props.classes.cardButton} >詳細</Button>
-        </CardActions>
       </Card>
     );
   }

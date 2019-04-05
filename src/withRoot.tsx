@@ -10,7 +10,7 @@ function theme() : Theme {
       primary:  primaryColor,
       text: {
         primary : '#2c2c2c',
-        secondary : 'white'
+        secondary : '#6c6c6c'
       },
       background:{
         default : 'white',

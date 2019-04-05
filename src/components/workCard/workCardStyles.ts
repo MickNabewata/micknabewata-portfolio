@@ -19,19 +19,11 @@ const styles = (theme : Theme) =>
     media : {
       height : 100
     },
-    cardButton : {
-      width : 'calc(100% - 30px)',
-      margin : '0 auto',
-      backgroundColor : theme.palette.primary.main,
-      color : theme.palette.text.secondary,
-      '&:hover' : {
-        backgroundColor : theme.palette.primary.dark
-      }
+    cardContent : {
+      height : '480px'
     },
     cardSection : {
       marginTop : '10px'
-    },
-    cardActions : {
     }
   });
 
