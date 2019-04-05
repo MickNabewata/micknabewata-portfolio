@@ -3,10 +3,10 @@ import createStyles from '@material-ui/core/styles/createStyles';
 
 const styles = (theme : Theme) => 
   createStyles({
-    filters : {
+    fields : {
       marginBottom : '20px'
     },
-    filter : {
+    field : {
       marginRight : '20px'
     },
     addFilterButton : {
@@ -18,6 +18,18 @@ const styles = (theme : Theme) =>
         marginTop : '20px',
         display : 'block'
       }
+    },
+    filters : {
+
+    },
+    filterButton : {
+      margin: theme.spacing.unit,
+    },
+    filterIcon : {
+      marginLeft: theme.spacing.unit,
+    },
+    contents : {
+
     }
   });
 

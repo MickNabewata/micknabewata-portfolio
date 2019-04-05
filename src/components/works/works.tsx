@@ -2,6 +2,7 @@ import React, { ChangeEvent } from 'react';
 import styles from './worksStyles';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import TextField from '@material-ui/core/TextField';
+import DeleteIcon from '@material-ui/icons/Delete';
 import WorkCard, { Work } from '../workCard/workCard';
 import { Button } from '@material-ui/core';
 
@@ -63,12 +64,15 @@ class Works extends React.Component<Prop, State> {
   addFilter(filterKey : 'skillInput' | 'roleInput') {
 
     let filterValue = (filterKey == 'skillInput')? this.state.skillInput : this.state.roleInput;
+    let filterArrayKey = (filterKey == 'skillInput')? 'skills' : 'roles';
+    let filterArray = (filterKey == 'skillInput')? this.state.skills : this.state.roles;
+    let filter = (filterArray != undefined)? filterArray : [];
 
     if(filterValue && filterValue.trim())
     {
       filterValue = filterValue.trim();
-      alert('key:' + filterKey + ', value:' + filterValue);
       this.setState({
+        [filterArrayKey] : Array.from(new Set([...filter, ...[filterValue]])),
         [filterKey] : ''
       });
     }
@@ -131,17 +135,19 @@ class Works extends React.Component<Prop, State> {
   /** レンダリング */
   render() {
 
+    // 開発実績を取得
     let works = this.getWorks();
 
+    // 要素を作成
     return (
         <React.Fragment>
-          <div className={this.props.classes.filters}>
+          <div className={this.props.classes.fields}>
             <TextField
               id='skill'
               label = '技術'
               value = {this.state.skillInput}
               onChange = {this.handleChange('skillInput')}
-              className = {this.props.classes.filter}
+              className = {this.props.classes.field}
               onKeyDown = {this.handleEnter('skillInput')}
             />
             <TextField
@@ -155,9 +161,29 @@ class Works extends React.Component<Prop, State> {
               絞込みに追加
             </Button>
           </div>
-          {works.map((work) => {
-            return <WorkCard workInfo={work} />
-          })}
+          <div className={this.props.classes.filters}>
+            {(this.state.skills == undefined)? null : this.state.skills.map((skill) => {
+              return (
+                <Button variant="contained" color="default" className={this.props.classes.filterButton}>
+                  {skill}
+                  <DeleteIcon className={this.props.classes.filterIcon} />
+                </Button>
+              )
+            })}
+            {(this.state.roles == undefined)? null : this.state.roles.map((role) => {
+              return (
+                <Button variant="contained" color="default" className={this.props.classes.filterButton}>
+                  {role}
+                  <DeleteIcon className={this.props.classes.filterIcon} />
+                </Button>
+              )
+            })}
+          </div>
+          <div className={this.props.classes.contents}>
+            {works.map((work) => {
+              return <WorkCard workInfo={work} />
+            })}
+          </div>
         </React.Fragment>
     );
   }
