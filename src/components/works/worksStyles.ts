@@ -4,6 +4,7 @@ import createStyles from '@material-ui/core/styles/createStyles';
 const styles = (theme : Theme) => 
   createStyles({
     fields : {
+      marginLeft : '10px',
       marginBottom : '20px'
     },
     field : {

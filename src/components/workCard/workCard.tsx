@@ -56,7 +56,7 @@ class WorkCard extends React.Component<Prop, State> {
   /** レンダリング */
   render() {
     return (
-      <Card className={this.props.classes.card}>
+      <Card className={this.props.classes.card} key={this.props.workInfo.Name} >
         <CardMedia
           className={this.props.classes.media}
           image={this.props.workInfo.ImageUrl}
@@ -71,20 +71,17 @@ class WorkCard extends React.Component<Prop, State> {
               技術
             </Typography>
             <Typography component="p">
-              {this.props.workInfo.Skill.slice(0, 3).map((skill) => {
+              {this.props.workInfo.Skill.map((skill) => {
                 return (
-                  <Button color='primary' className={this.props.classes.filterButton} onClick={this.props.skillClickHandler(skill)}>
+                  <Button
+                    color='primary'
+                    className={this.props.classes.filterButton}
+                    onClick={this.props.skillClickHandler(skill)}
+                    key={`${this.props.workInfo.Name}-${skill}`} >
                     {skill}
                   </Button>
                 );
               })}
-              {
-                (this.props.workInfo.Skill.length > 2)?
-                <Button color='secondary' className={this.props.classes.filterButton} >
-                  ...
-                </Button> : 
-                null
-              }
             </Typography>
           </Paper>
           <Paper elevation={0} className={this.props.classes.cardSection + ',' + this.props.classes.noMarginTop}>
@@ -94,7 +91,11 @@ class WorkCard extends React.Component<Prop, State> {
             <Typography component="p">
               {this.props.workInfo.Role.slice(0, 3).map((role) => {
                 return (
-                  <Button color='primary' className={this.props.classes.filterButton} onClick={this.props.roleClickHandler(role)}>
+                  <Button
+                    color='primary'
+                    className={this.props.classes.filterButton}
+                    onClick={this.props.roleClickHandler(role)}
+                    key={`${this.props.workInfo.Name}-${role}`} >
                     {role}
                   </Button>
                 );
@@ -109,29 +110,37 @@ class WorkCard extends React.Component<Prop, State> {
               {this.props.workInfo.Members}
             </Typography>
           </Paper>
-          <Paper elevation={0} className={this.props.classes.cardSection}>
-            <Typography component="h3" variant="h6">
-              URL
-            </Typography>
-            <Typography component="p">
-              {this.props.workInfo.URL}
-            </Typography>
-          </Paper>
-          <Paper elevation={0} className={this.props.classes.cardSection}>
-            <Typography component="h3" variant="h6">
-              GitHub
-            </Typography>
-            <Typography component="p">
-              {this.props.workInfo.GitHub}
-            </Typography>
-          </Paper>
+          {
+            (this.props.workInfo.URL)?
+              <Paper elevation={0} className={this.props.classes.cardSection} >
+                <Typography component="h3" variant="h6">
+                  URL
+                </Typography>
+                <Typography component="p">
+                  {this.props.workInfo.URL}
+                </Typography>
+              </Paper> :
+              null
+          }
+          {
+            (this.props.workInfo.GitHub)?
+              <Paper elevation={0} className={this.props.classes.cardSection} >
+                <Typography component="h3" variant="h6">
+                  GitHub
+                </Typography>
+                <Typography component="p">
+                  {this.props.workInfo.GitHub}
+                </Typography>
+              </Paper> :
+              null
+          }
           <Paper elevation={0} className={this.props.classes.cardSection}>
             <Typography component="h3" variant="h6">
               概要
             </Typography>
             {this.props.workInfo.Overview.map((val) => {
               return (
-                <Typography component="p">
+                <Typography component="p" key={`${this.props.workInfo.Name}-${val}`}>
                   {val}
                 </Typography>
               )

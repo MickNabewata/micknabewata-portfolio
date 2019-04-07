@@ -5,7 +5,6 @@ import TextField from '@material-ui/core/TextField';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { Button } from '@material-ui/core';
 import WorkCard, { Work } from '../workCard/workCard';
-import { isDuplicate } from '../../utils/arrayUtil';
 
 /** プロパティ型定義 */
 interface Prop extends WithStyles<typeof styles> {
@@ -106,13 +105,13 @@ class Works extends React.Component<Prop, State> {
     let datas : Work[] = [
       {
         ImageUrl : 'http://pet-seikatsu.jp/images/2015/08/2d85d2a2063d1ed3b3271144167cdf85-large.jpg',
-        Name : 'Sample1',
-        Skill : ['C#', 'ASP.NET', 'SHAREPOINT ONLINE', 'WINDOWS SERVER 2012', 'SQL SERVER 2013', '謎技術'],
+        Name : 'ポートフォリトサイト構築',
+        Skill : ['TYPESCRIPT', 'REACT', 'FIREBASE'],
         Role : ['メンバー', 'リーダー'],
         Members : 1,
         URL : 'http://google.co.jp',
         GitHub : 'http://yahoo.co.jp',
-        Overview : ['行1','行2','','行3']
+        Overview : ['','行2','','行3']
       },
       {
         ImageUrl : 'http://pet-seikatsu.jp/images/2015/08/2d85d2a2063d1ed3b3271144167cdf85-large.jpg',
@@ -125,32 +124,55 @@ class Works extends React.Component<Prop, State> {
         Overview : ['行1']
       },
       {
-        ImageUrl : '',
-        Name : '',
-        Skill : [],
-        Role : [],
-        Members : 3,
-        URL : '',
-        GitHub : '',
-        Overview : ['']
+        ImageUrl : 'http://pet-seikatsu.jp/images/2015/08/2d85d2a2063d1ed3b3271144167cdf85-large.jpg',
+        Name : 'Sample3',
+        Skill : ['SHAREPOINT ONLINE', 'SHAREPOINT FRAMEWORK', 'REACT'],
+        Role : ['メンバー', 'リーダー'],
+        Members : 1,
+        URL : 'http://google.co.jp',
+        GitHub : 'http://yahoo.co.jp',
+        Overview : ['行1','行2','','行3']
       },
       {
-        Skill : [],
-        Name : '',
-        Role : [],
-        Members : 4,
-        Overview : ['']
+        ImageUrl : 'http://pet-seikatsu.jp/images/2015/08/2d85d2a2063d1ed3b3271144167cdf85-large.jpg',
+        Name : 'Sample4',
+        Skill : ['SHAREPOINT ONLINE', 'SHAREPOINT FRAMEWORK', 'REACT'],
+        Role : ['メンバー', 'リーダー'],
+        Members : 1,
+        URL : 'http://google.co.jp',
+        GitHub : 'http://yahoo.co.jp',
+        Overview : ['行1','行2','','行3']
       },
       {
-        ImageUrl : undefined,
-        Name : '',
-        Skill : [],
-        Role : [],
-        URL : undefined,
-        GitHub : undefined,
-        Members : 5,
-        Overview : []
+        ImageUrl : 'http://pet-seikatsu.jp/images/2015/08/2d85d2a2063d1ed3b3271144167cdf85-large.jpg',
+        Name : 'Sample5',
+        Skill : ['SHAREPOINT ONLINE', 'SHAREPOINT FRAMEWORK', 'REACT'],
+        Role : ['メンバー', 'リーダー'],
+        Members : 1,
+        URL : 'http://google.co.jp',
+        GitHub : 'http://yahoo.co.jp',
+        Overview : ['行1','行2','','行3']
       },
+      {
+        ImageUrl : 'http://pet-seikatsu.jp/images/2015/08/2d85d2a2063d1ed3b3271144167cdf85-large.jpg',
+        Name : 'Sample6',
+        Skill : ['SHAREPOINT ONLINE', 'SHAREPOINT FRAMEWORK', 'REACT'],
+        Role : ['メンバー', 'リーダー'],
+        Members : 1,
+        URL : 'http://google.co.jp',
+        GitHub : 'http://yahoo.co.jp',
+        Overview : ['行1','行2','','行3']
+      },
+      {
+        ImageUrl : 'http://pet-seikatsu.jp/images/2015/08/2d85d2a2063d1ed3b3271144167cdf85-large.jpg',
+        Name : 'Sample7',
+        Skill : ['SHAREPOINT ONLINE', 'SHAREPOINT FRAMEWORK', 'REACT'],
+        Role : ['メンバー', 'リーダー'],
+        Members : 1,
+        URL : 'http://google.co.jp',
+        GitHub : 'http://yahoo.co.jp',
+        Overview : ['行1','行2','','行3']
+      }
     ];
 
     // フィルタ
@@ -159,12 +181,34 @@ class Works extends React.Component<Prop, State> {
 
     if(skills && skills.length > 0)
     {
-      datas = datas.filter((v) => isDuplicate(v.Skill, skills));
+      datas = datas.filter((v) => {
+        let ret : boolean = true;
+        for (let i = 0; i < skills.length; i++)
+        {
+          if(v.Skill.indexOf(skills[i]) == -1)
+          {
+            ret = false;
+            break;
+          }
+        }
+        return ret;
+      });
     }
 
     if(roles && roles.length > 0)
     {
-      datas = datas.filter((v) => isDuplicate(v.Role, roles));
+      datas = datas.filter((v) => {
+        let ret : boolean = true;
+        for (let i = 0; i < roles.length; i++)
+        {
+          if(v.Role.indexOf(roles[i]) == -1)
+          {
+            ret = false;
+            break;
+          }
+        }
+        return ret;
+      });
     }
 
     return datas;
@@ -208,7 +252,8 @@ class Works extends React.Component<Prop, State> {
                   variant="contained" 
                   color="default" 
                   className={this.props.classes.filterButton} 
-                  onClick={this.handleDeleteFilter('skills', skill)} >
+                  onClick={this.handleDeleteFilter('skills', skill)}
+                  key={`skillFilter-${skill}`}  >
                   {skill}
                   <DeleteIcon className={this.props.classes.filterIcon} />
                 </Button>
@@ -220,7 +265,8 @@ class Works extends React.Component<Prop, State> {
                   variant="contained" 
                   color="default" 
                   className={this.props.classes.filterButton} 
-                  onClick={this.handleDeleteFilter('roles', role)} >
+                  onClick={this.handleDeleteFilter('roles', role)}
+                  key={`roleFilter-${role}`} >
                   {role}
                   <DeleteIcon className={this.props.classes.filterIcon} />
                 </Button>
@@ -232,7 +278,12 @@ class Works extends React.Component<Prop, State> {
               (works.length == 0)? 
                 <div className={this.props.classes.noResults}>検索結果がありません</div> : 
                 works.map((work) => {
-                  return <WorkCard workInfo={work} skillClickHandler={this.handleSkillClick} roleClickHandler={this.handleRoleClick} />
+                  return (
+                    <WorkCard 
+                      workInfo={work} 
+                      skillClickHandler={this.handleSkillClick} 
+                      roleClickHandler={this.handleRoleClick}
+                      key={`workCard-${work.Name}`} />)
                 })
             }
           </div>
