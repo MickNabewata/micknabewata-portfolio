@@ -18,7 +18,7 @@ const styles = (theme : Theme) =>
       [theme.breakpoints.up('md')]: {
         width:'100%',
       },
-      backgroundImage : 'url("/appBar.png")'
+      backgroundImage : 'url("/appBar.jpg")'
     },
     menuButton: {
       marginRight: 20,
@@ -39,14 +39,27 @@ const styles = (theme : Theme) =>
     toolbar: theme.mixins.toolbar,
     drawerPaper: {
       width: drawerWidth,
-      zIndex : 0
+      zIndex : 0,
+      backgroundImage : 'url("/Door.jpg")',
+      overflowX : 'hidden'
     },
     content: {
       flexGrow: 1,
       padding: theme.spacing.unit,
+      backgroundColor : 'whiteSmoke',
+      minHeight : '100vh'
     },
     linkItem : {
-      backgroundColor : theme.palette.primary.light
+      backgroundColor : 'whiteSmoke',
+      opacity : 0.9,
+      margin : '5px',
+      padding : '5px',
+      '&:hover' : {
+        backgroundColor : 'silver'
+      }
+    },
+    selected : {
+      backgroundColor : 'red'
     },
     linkText : {
       fontSize : 14

@@ -88,7 +88,7 @@ class DrawerLayout extends React.Component<Prop, State> {
                 button 
                 key={link.text} 
                 onClick={ this.handleClick(link.click, link.closeMenuAfterClick) } 
-                className={ (link.isSelected)? this.props.classes.linkItem : '' } >
+                className={this.props.classes.linkItem + ' ' + ((link.isSelected)? this.props.classes.selected : '') } >
                 {(link.icon !== undefined)? <ListItemIcon>{link.icon}</ListItemIcon> : <React.Fragment />}
                 <ListItemText primary={link.text} disableTypography={true} className={this.props.classes.linkText} />
               </ListItem>
@@ -166,15 +166,15 @@ class DrawerLayout extends React.Component<Prop, State> {
             SEO対策(重複コンテンツの回避)を行いたい場合には、この部分をJavaScriptで記述します。
           */}
           <Hidden smDown implementation='css'>
-            <Drawer
-              classes={{
-                paper: this.props.classes.drawerPaper,
-              }}
-              variant='permanent'
-              open
-            >
-              {drawer}
-            </Drawer>
+            <div>
+              <Drawer
+                classes={{paper: this.props.classes.drawerPaper}}
+                variant='permanent'
+                open
+              >
+                {drawer}
+              </Drawer>
+            </div>
           </Hidden>
         </nav>
         {/* メイン領域 */}

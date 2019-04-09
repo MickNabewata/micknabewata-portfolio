@@ -23,123 +23,15 @@ export type Work = {
 /** 開発実績データ */
 export const works : Work[] = [
     {
-        ImageUrl : '',
-        Name : '',
-        Skill : [],
-        Role : [],
+        ImageUrl : '/Portfolio.jpg',
+        Name : 'ポートフォリオサイト構築',
+        Skill : ['TYPESCRIPT', 'REACT', 'FIREBASE', 'JAVASCRIPT', 'HTML/CSS', 'WEBフロントエンド', 'NODE.JS'],
+        Role : ['メンバー'],
         Members : 1,
-        URL : '',
-        GitHub : '',
-        Overview : []
-    },
-    {
-        ImageUrl : '',
-        Name : '',
-        Skill : [],
-        Role : [],
-        Members : 1,
-        URL : '',
-        GitHub : '',
-        Overview : []
-    },
-    {
-        ImageUrl : '',
-        Name : '',
-        Skill : [],
-        Role : [],
-        Members : 1,
-        URL : '',
-        GitHub : '',
-        Overview : []
-    },
-    {
-        ImageUrl : '',
-        Name : '',
-        Skill : [],
-        Role : [],
-        Members : 1,
-        URL : '',
-        GitHub : '',
-        Overview : []
-    },
-    {
-        ImageUrl : '',
-        Name : '',
-        Skill : [],
-        Role : [],
-        Members : 1,
-        URL : '',
-        GitHub : '',
-        Overview : []
-    },
-    {
-        ImageUrl : '',
-        Name : '',
-        Skill : [],
-        Role : [],
-        Members : 1,
-        URL : '',
-        GitHub : '',
-        Overview : []
-    },
-    {
-        ImageUrl : '',
-        Name : '',
-        Skill : [],
-        Role : [],
-        Members : 1,
-        URL : '',
-        GitHub : '',
-        Overview : []
-    },
-    {
-        ImageUrl : '',
-        Name : '',
-        Skill : [],
-        Role : [],
-        Members : 1,
-        URL : '',
-        GitHub : '',
-        Overview : []
-    },
-    {
-        ImageUrl : '',
-        Name : '',
-        Skill : [],
-        Role : [],
-        Members : 1,
-        URL : '',
-        GitHub : '',
-        Overview : []
-    },
-    {
-        ImageUrl : '',
-        Name : '',
-        Skill : [],
-        Role : [],
-        Members : 1,
-        URL : '',
-        GitHub : '',
-        Overview : []
-    },
-    {
-        ImageUrl : '',
-        Name : '',
-        Skill : [],
-        Role : [],
-        Members : 1,
-        URL : '',
-        GitHub : '',
-        Overview : []
-    },
-    {
-        ImageUrl : '',
-        Name : '',
-        Skill : [],
-        Role : [],
-        Members : 1,
-        URL : '',
-        GitHub : '',
-        Overview : []
+        URL : 'http://localhost:3000/',
+        GitHub : 'http://localhost:3000/',
+        Overview : [
+            '当サイトの企画・デザイン・構築を行いました。',
+        ]
     }
 ];

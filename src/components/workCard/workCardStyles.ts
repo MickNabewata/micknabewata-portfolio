@@ -16,7 +16,8 @@ const styles = (theme : Theme) =>
       float : 'left'
     },
     media : {
-      height : '100px'
+      height : '100px',
+      backgroundPosition : 'center top'
     },
     cardSection : {
       marginTop : '10px'
