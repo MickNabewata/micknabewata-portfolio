@@ -1,11 +1,13 @@
 import React from 'react';
 import styles from './skillsStyles';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
-import Typography from '@material-ui/core/Typography';
-import SkillCard, { SkillCategory, Skill } from '../skillCard/skillCard';
+import SkillCard from '../skillCard/skillCard';
+import { SkillCategory, skills } from '../../datas/skills';
 
 /** プロパティ型定義 */
 interface Prop extends WithStyles<typeof styles> {
+  /** 技術リンククリックハンドラ */
+  clickHandler : (skillName : string)  => (event : React.MouseEvent<HTMLElement, MouseEvent>) => void
 }
 
 /** ステート型定義 */
@@ -28,86 +30,9 @@ class Skills extends React.Component<Prop, State> {
     };
   }
 
+  /** 技術データ取得 */
   getSkills() : SkillCategory[] {
-    let datas : SkillCategory[] = [
-      {
-        Category : '開発言語',
-        Skills : [
-          {
-            Name : 'C#',
-            Stars : 3,
-            HasWork : true
-          },
-          {
-            Name : 'JAVASCRIPT',
-            Stars : 2,
-            HasWork : true
-          },
-          {
-            Name : 'VBA',
-            Stars : 1,
-            HasWork : true
-          }
-        ],
-      },
-      {
-        Category : 'フレームワーク',
-        Skills : [
-          {
-            Name : '.NET FRAMEWORK',
-            Stars : 3,
-            HasWork : true
-          },
-          {
-            Name : '.NET CORE',
-            Stars : 2,
-            HasWork : true
-          },
-          {
-            Name : 'REACT',
-            Stars : 1,
-            HasWork : true
-          }
-        ],
-      },
-      {
-        Category : 'OS',
-        Skills : [
-          {
-            Name : 'WINDOWS',
-            Stars : 3,
-            HasWork : false
-          },
-          {
-            Name : 'LINUX',
-            Stars : 2,
-            HasWork : false
-          },
-          {
-            Name : 'WINDOWS SERVER',
-            Stars : 1,
-            HasWork : false
-          }
-        ],
-      },
-      {
-        Category : 'データベース',
-        Skills : [
-          {
-            Name : 'SQL SERVER',
-            Stars : 3,
-            HasWork : true
-          },
-          {
-            Name : 'MYSQL',
-            Stars : 2,
-            HasWork : false
-          }
-        ],
-      }
-    ];
-
-    return datas;
+    return skills;
   }
 
   /** レンダリング */
@@ -124,7 +49,8 @@ class Skills extends React.Component<Prop, State> {
                   return (
                     <SkillCard 
                       skillInfo={skill} 
-                      key={`skillCard-${skill.Category}`} />)
+                      key={`skillCard-${skill.Category}`}
+                      clickHandler={this.props.clickHandler} />)
                 })
             }
           </div>

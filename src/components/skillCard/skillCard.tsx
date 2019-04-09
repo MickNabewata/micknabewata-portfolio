@@ -7,34 +7,19 @@ import Typography from '@material-ui/core/Typography';
 import StarIconRated from '@material-ui/icons/Star';
 import StarIcon from '@material-ui/icons/StarBorder';
 import { Button } from '@material-ui/core';
+import { SkillCategory, Skill } from '../../datas/skills';
 
 /** プロパティ型定義 */
 interface Prop extends WithStyles<typeof styles> {
   /** 技術情報 */
-  skillInfo : SkillCategory
+  skillInfo : SkillCategory,
+  /** 技術リンククリックハンドラ */
+  clickHandler : (skillName : string)  => (event : React.MouseEvent<HTMLElement, MouseEvent>) => void
 }
 
 /** ステート型定義 */
 type State = {
 };
-
-/** 技術カテゴリ型定義 */
-export type SkillCategory = {
-  /** カテゴリ */
-  Category : string,
-  /** 技術 */
-  Skills : Skill[]
-}
-
-/** 技術型定義 */
-export type Skill = {
-  /** 技術名 */
-  Name : string,
-  /** スター数 */
-  Stars : number,
-  /** 実績有無 */
-  HasWork : boolean
-}
 
 /** コンポーネント定義 */
 class SkillCard extends React.Component<Prop, State> {
@@ -55,8 +40,8 @@ class SkillCard extends React.Component<Prop, State> {
     for(let i = 1; i <= 5; i++)
     {
       ret.push((i <= skill.Stars)?
-        <StarIconRated fontSize='small' key={`star${i}-${skill.Name}`} /> :
-        <StarIcon fontSize='small' key={`star${i}-${skill.Name}`} />
+        <StarIconRated fontSize='small' key={`star${i}-${skill.Name}`} className={this.props.classes.star} /> :
+        <StarIcon fontSize='small' key={`star${i}-${skill.Name}`} className={this.props.classes.star} />
       );
     }
     return ret;
@@ -76,7 +61,13 @@ class SkillCard extends React.Component<Prop, State> {
                 <span className={this.props.classes.skillName}>
                   {
                     (skill.HasWork)?
-                      <Button color='primary' key={`link-${skill.Name}`} className={this.props.classes.skillLink}>{skill.Name}</Button> :
+                      <Button 
+                        color='primary' 
+                        key={`link-${skill.Name}`} 
+                        className={this.props.classes.skillLink}
+                        onClick={this.props.clickHandler(skill.Name)}>
+                          {skill.Name}
+                      </Button> :
                       <span className={this.props.classes.skillText}>{skill.Name}</span>
                   }
                 </span>

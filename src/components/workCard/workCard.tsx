@@ -2,12 +2,15 @@ import React from 'react';
 import styles from './workCardStyles';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import Dialog from '@material-ui/core/Dialog';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import { Work } from '../../datas/works';
 
 /** プロパティ型定義 */
 interface Prop extends WithStyles<typeof styles> {
@@ -18,27 +21,11 @@ interface Prop extends WithStyles<typeof styles> {
 
 /** ステート型定義 */
 type State = {
+  /** ダイアログが開いているか否か */
+  dialogOpen : boolean,
+  /** ダイアログに表示する技術 */
+  dialogSkills : string[]
 };
-
-/** 開発実績型定義 */
-export type Work = {
-  /** 画像URL */
-  ImageUrl? : string | '',
-  /** 件名 */
-  Name : string,
-  /** 技術 */
-  Skill : string[],
-  /** 役割 */
-  Role : string[],
-  /** 人数 */
-  Members : Number,
-  /** URL */
-  URL? : string,
-  /** GitHub */
-  GitHub? : string,
-  /** 概要(1要素ずつ改行表示) */
-  Overview : string[]
-}
 
 /** コンポーネント定義 */
 class WorkCard extends React.Component<Prop, State> {
@@ -50,104 +37,145 @@ class WorkCard extends React.Component<Prop, State> {
 
     // ステート初期化
     this.state = {
+      dialogOpen : false,
+      dialogSkills : []
     };
   }
+
+  /** ダイアログオープン */
+  handleDialogOpen = (skills : string[]) => () => {
+    this.setState({ dialogSkills : skills, dialogOpen: true });
+  };
+
+  /** ダイアログクローズ */
+  handleDialogClose = () => {
+    this.setState({ dialogSkills : [], dialogOpen: false });
+  };
 
   /** レンダリング */
   render() {
     return (
-      <Card className={this.props.classes.card} key={this.props.workInfo.Name} >
-        <CardMedia
-          className={this.props.classes.media}
-          image={this.props.workInfo.ImageUrl}
-          title={this.props.workInfo.Name}
-        />
-        <CardContent>
-          <Typography component='h2' variant='h5' gutterBottom >
-            {this.props.workInfo.Name}
-          </Typography>
-          <Paper elevation={0} className={this.props.classes.cardSection} >
-            <Typography component="h3" variant="h6">
-              技術
+      <React.Fragment>
+        <Card className={this.props.classes.card} key={this.props.workInfo.Name} >
+          <CardMedia
+            className={this.props.classes.media}
+            image={this.props.workInfo.ImageUrl}
+            title={this.props.workInfo.Name}
+          />
+          <CardContent>
+            <Typography component='h2' variant='h5' gutterBottom >
+              {this.props.workInfo.Name}
             </Typography>
-            <Typography component="p">
-              {this.props.workInfo.Skill.map((skill) => {
+            <Paper elevation={0} className={this.props.classes.cardSection} >
+              <Typography component="h3" variant="h6">
+                技術
+              </Typography>
+              <Typography component="p">
+                {this.props.workInfo.Skill.slice(0, 3).map((skill) => {
+                  return (
+                    <Button
+                      color='primary'
+                      className={this.props.classes.filterButton}
+                      onClick={this.props.skillClickHandler(skill)}
+                      key={`${this.props.workInfo.Name}-${skill}`} >
+                      {skill}
+                    </Button>
+                  );
+                })}
+                {
+                  (this.props.workInfo.Skill.length > 3)?
+                    <Button color='secondary' className={this.props.classes.filterButton} onClick={this.handleDialogOpen(this.props.workInfo.Skill)}>...</Button> : 
+                    null
+                }
+              </Typography>
+            </Paper>
+            <Paper elevation={0} className={this.props.classes.cardSection + ',' + this.props.classes.noMarginTop}>
+              <Typography component="h3" variant="h6">
+                役割
+              </Typography>
+              <Typography component="p">
+                {this.props.workInfo.Role.slice(0, 3).map((role) => {
+                  return (
+                    <Button
+                      color='primary'
+                      className={this.props.classes.filterButton}
+                      onClick={this.props.roleClickHandler(role)}
+                      key={`${this.props.workInfo.Name}-${role}`} >
+                      {role}
+                    </Button>
+                  );
+                })}
+              </Typography>
+            </Paper>
+            <Paper elevation={0} className={this.props.classes.cardSection + ',' + this.props.classes.noMarginTop}>
+              <Typography component="h3" variant="h6">
+                人数
+              </Typography>
+              <Typography component="p">
+                {this.props.workInfo.Members}
+              </Typography>
+            </Paper>
+            {
+              (this.props.workInfo.URL)?
+                <Paper elevation={0} className={this.props.classes.cardSection} >
+                  <Typography component="h3" variant="h6">
+                    URL
+                  </Typography>
+                  <Typography component="p">
+                    {this.props.workInfo.URL}
+                  </Typography>
+                </Paper> :
+                null
+            }
+            {
+              (this.props.workInfo.GitHub)?
+                <Paper elevation={0} className={this.props.classes.cardSection} >
+                  <Typography component="h3" variant="h6">
+                    GitHub
+                  </Typography>
+                  <Typography component="p">
+                    {this.props.workInfo.GitHub}
+                  </Typography>
+                </Paper> :
+                null
+            }
+            <Paper elevation={0} className={this.props.classes.cardSection}>
+              <Typography component="h3" variant="h6">
+                概要
+              </Typography>
+              {this.props.workInfo.Overview.map((val) => {
                 return (
-                  <Button
-                    color='primary'
-                    className={this.props.classes.filterButton}
-                    onClick={this.props.skillClickHandler(skill)}
-                    key={`${this.props.workInfo.Name}-${skill}`} >
-                    {skill}
-                  </Button>
-                );
+                  <Typography component="p" key={`${this.props.workInfo.Name}-${val}`}>
+                    {val}
+                  </Typography>
+                )
               })}
-            </Typography>
-          </Paper>
-          <Paper elevation={0} className={this.props.classes.cardSection + ',' + this.props.classes.noMarginTop}>
-            <Typography component="h3" variant="h6">
-              役割
-            </Typography>
-            <Typography component="p">
-              {this.props.workInfo.Role.slice(0, 3).map((role) => {
-                return (
-                  <Button
-                    color='primary'
-                    className={this.props.classes.filterButton}
-                    onClick={this.props.roleClickHandler(role)}
-                    key={`${this.props.workInfo.Name}-${role}`} >
-                    {role}
-                  </Button>
-                );
-              })}
-            </Typography>
-          </Paper>
-          <Paper elevation={0} className={this.props.classes.cardSection + ',' + this.props.classes.noMarginTop}>
-            <Typography component="h3" variant="h6">
-              人数
-            </Typography>
-            <Typography component="p">
-              {this.props.workInfo.Members}
-            </Typography>
-          </Paper>
-          {
-            (this.props.workInfo.URL)?
-              <Paper elevation={0} className={this.props.classes.cardSection} >
-                <Typography component="h3" variant="h6">
-                  URL
-                </Typography>
-                <Typography component="p">
-                  {this.props.workInfo.URL}
-                </Typography>
-              </Paper> :
-              null
-          }
-          {
-            (this.props.workInfo.GitHub)?
-              <Paper elevation={0} className={this.props.classes.cardSection} >
-                <Typography component="h3" variant="h6">
-                  GitHub
-                </Typography>
-                <Typography component="p">
-                  {this.props.workInfo.GitHub}
-                </Typography>
-              </Paper> :
-              null
-          }
-          <Paper elevation={0} className={this.props.classes.cardSection}>
-            <Typography component="h3" variant="h6">
-              概要
-            </Typography>
-            {this.props.workInfo.Overview.map((val) => {
+            </Paper>
+          </CardContent>
+        </Card>
+        <Dialog
+          fullWidth={false}
+          maxWidth={'sm'}
+          open={this.state.dialogOpen}
+          onClose={this.handleDialogClose}
+          aria-labelledby='full-skills-dialog-title'
+        >
+          <DialogTitle id='full-skills-dialog-title'>すべての技術</DialogTitle>
+          <DialogContentText className={this.props.classes.skillDialogContent}>
+            {this.state.dialogSkills.map((skill) => {
               return (
-                <Typography component="p" key={`${this.props.workInfo.Name}-${val}`}>
-                  {val}
-                </Typography>
-              )
+                <Button
+                  color='primary'
+                  className={this.props.classes.filterButton}
+                  onClick={this.props.skillClickHandler(skill)}
+                  key={`${this.props.workInfo.Name}-${skill}`} >
+                  {skill}
+                </Button>
+              );
             })}
-          </Paper>
-        </CardContent>
-      </Card>
+          </DialogContentText>
+        </Dialog>
+      </React.Fragment>
     );
   }
 }

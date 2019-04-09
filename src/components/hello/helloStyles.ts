@@ -19,6 +19,7 @@ const styles = (theme : Theme) =>
       [theme.breakpoints.up('md')] : {
         fontSize : 20
       },
+      lineHeight : 2
     }
   });
 

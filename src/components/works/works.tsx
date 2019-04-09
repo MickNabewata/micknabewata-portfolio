@@ -4,10 +4,13 @@ import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import TextField from '@material-ui/core/TextField';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { Button } from '@material-ui/core';
-import WorkCard, { Work } from '../workCard/workCard';
+import WorkCard from '../workCard/workCard';
+import { Work, works } from '../../datas/works';
 
 /** プロパティ型定義 */
 interface Prop extends WithStyles<typeof styles> {
+  /** 技術名フィルタ */
+  skillFilters? : string[]
 }
 
 /** ステート型定義 */
@@ -33,7 +36,7 @@ class Works extends React.Component<Prop, State> {
     // ステート初期化
     this.state = {
       skillInput : '',
-      skills : [],
+      skills : this.props.skillFilters,
       roleInput : '',
       roles : []
     };
@@ -102,78 +105,7 @@ class Works extends React.Component<Prop, State> {
   getWorks() : Work[]
   {
     // 返却するデータ
-    let datas : Work[] = [
-      {
-        ImageUrl : 'http://pet-seikatsu.jp/images/2015/08/2d85d2a2063d1ed3b3271144167cdf85-large.jpg',
-        Name : 'ポートフォリオサイト構築',
-        Skill : ['TYPESCRIPT', 'REACT', 'FIREBASE'],
-        Role : ['メンバー', 'リーダー'],
-        Members : 1,
-        URL : 'http://google.co.jp',
-        GitHub : 'http://yahoo.co.jp',
-        Overview : ['行1','行2','行3']
-      },
-      {
-        ImageUrl : 'http://pet-seikatsu.jp/images/2015/08/2d85d2a2063d1ed3b3271144167cdf85-large.jpg',
-        Name : 'Sample2',
-        Skill : ['C#'],
-        Role : ['メンバー'],
-        Members : 2,
-        URL : 'http://google.co.jp',
-        GitHub : 'http://yahoo.co.jp',
-        Overview : ['行1']
-      },
-      {
-        ImageUrl : 'http://pet-seikatsu.jp/images/2015/08/2d85d2a2063d1ed3b3271144167cdf85-large.jpg',
-        Name : 'Sample3',
-        Skill : ['SHAREPOINT ONLINE', 'SHAREPOINT FRAMEWORK', 'REACT'],
-        Role : ['メンバー', 'リーダー'],
-        Members : 1,
-        URL : 'http://google.co.jp',
-        GitHub : 'http://yahoo.co.jp',
-        Overview : ['行1','行2','','行3']
-      },
-      {
-        ImageUrl : 'http://pet-seikatsu.jp/images/2015/08/2d85d2a2063d1ed3b3271144167cdf85-large.jpg',
-        Name : 'Sample4',
-        Skill : ['SHAREPOINT ONLINE', 'SHAREPOINT FRAMEWORK', 'REACT'],
-        Role : ['メンバー', 'リーダー'],
-        Members : 1,
-        URL : 'http://google.co.jp',
-        GitHub : 'http://yahoo.co.jp',
-        Overview : ['行1','行2','','行3']
-      },
-      {
-        ImageUrl : 'http://pet-seikatsu.jp/images/2015/08/2d85d2a2063d1ed3b3271144167cdf85-large.jpg',
-        Name : 'Sample5',
-        Skill : ['SHAREPOINT ONLINE', 'SHAREPOINT FRAMEWORK', 'REACT'],
-        Role : ['メンバー', 'リーダー'],
-        Members : 1,
-        URL : 'http://google.co.jp',
-        GitHub : 'http://yahoo.co.jp',
-        Overview : ['行1','行2','','行3']
-      },
-      {
-        ImageUrl : 'http://pet-seikatsu.jp/images/2015/08/2d85d2a2063d1ed3b3271144167cdf85-large.jpg',
-        Name : 'Sample6',
-        Skill : ['SHAREPOINT ONLINE', 'SHAREPOINT FRAMEWORK', 'REACT'],
-        Role : ['メンバー', 'リーダー'],
-        Members : 1,
-        URL : 'http://google.co.jp',
-        GitHub : 'http://yahoo.co.jp',
-        Overview : ['行1','行2','','行3']
-      },
-      {
-        ImageUrl : 'http://pet-seikatsu.jp/images/2015/08/2d85d2a2063d1ed3b3271144167cdf85-large.jpg',
-        Name : 'Sample7',
-        Skill : ['SHAREPOINT ONLINE', 'SHAREPOINT FRAMEWORK', 'REACT'],
-        Role : ['メンバー', 'リーダー'],
-        Members : 1,
-        URL : 'http://google.co.jp',
-        GitHub : 'http://yahoo.co.jp',
-        Overview : ['行1','行2','','行3']
-      }
-    ];
+    let datas = works;
 
     // フィルタ
     let skills : string[] = (this.state.skills)? this.state.skills : [];

@@ -18,6 +18,7 @@ const styles = (theme : Theme) =>
       [theme.breakpoints.up('md')]: {
         width:'100%',
       },
+      backgroundImage : 'url("/appBar.png")'
     },
     menuButton: {
       marginRight: 20,
@@ -43,6 +44,9 @@ const styles = (theme : Theme) =>
     content: {
       flexGrow: 1,
       padding: theme.spacing.unit,
+    },
+    linkItem : {
+      backgroundColor : theme.palette.primary.light
     },
     linkText : {
       fontSize : 14

@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './helloStyles';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import Typography from '@material-ui/core/Typography';
+import { hello } from '../../datas/hello';
 
 /** プロパティ型定義 */
 interface Prop extends WithStyles<typeof styles> {
@@ -31,16 +32,7 @@ class Hello extends React.Component<Prop, State> {
 
   /** メッセージ取得 */
   getHello() : string[] {
-    return [
-      '当サイトへご訪問頂きありがとうございます。',
-      '私は業務アプリケーション開発とOffice 365を得意とする34歳エンジニア♂です。',
-      '正社員として勤務する傍ら、システム構築の楽しさと',
-      '新しい技術を活かす機会とお金を求めて副業をしています。',
-      '好きな技術はSPAとAPIとSharePointです。',
-      '好きな業務はIT化の相談に乗ってシンプルな業務とシステムを描くことです。',
-      '今日も元気にシンプルに。',
-      '世界はシンプルさを求めています。（たぶん'
-    ];
+    return hello;
   }
 
   /** タイトル要素生成 */
@@ -60,7 +52,7 @@ class Hello extends React.Component<Prop, State> {
         {
           this.getHello().map((hello : string) => {
             num++;
-            return <Typography key={num} component='p' gutterBottom className={this.props.classes.hello}>{hello}</Typography>
+            return <Typography key={num} component='p' className={this.props.classes.hello}>{hello}</Typography>
           })
         }
       </React.Fragment>

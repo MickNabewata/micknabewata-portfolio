@@ -23,7 +23,9 @@ export type Link = {
   /** クリックイベント */
   click? : ((event : React.MouseEvent<HTMLElement, MouseEvent>) => void) | undefined,
   /** クリック後にナビゲーションを閉じるか否か */
-  closeMenuAfterClick? : boolean | false
+  closeMenuAfterClick? : boolean | false,
+  /** 現在選択中か否か */
+  isSelected? : boolean | false
 };
 
 /** ナビゲーションリンク配列 */
@@ -82,7 +84,11 @@ class DrawerLayout extends React.Component<Prop, State> {
         <List>
           {links.map((link : Link) => {
             return (
-              <ListItem button key={link.text} onClick={ this.handleClick(link.click, link.closeMenuAfterClick) } >
+              <ListItem 
+                button 
+                key={link.text} 
+                onClick={ this.handleClick(link.click, link.closeMenuAfterClick) } 
+                className={ (link.isSelected)? this.props.classes.linkItem : '' } >
                 {(link.icon !== undefined)? <ListItemIcon>{link.icon}</ListItemIcon> : <React.Fragment />}
                 <ListItemText primary={link.text} disableTypography={true} className={this.props.classes.linkText} />
               </ListItem>
@@ -108,7 +114,7 @@ class DrawerLayout extends React.Component<Prop, State> {
 
   /** タイトルを取得 */
   getSiteTitle() : string {
-    return 'MickNabewata\'s portfolio';
+    return '鍋綿ポートフォリオ';
   }
 
   /** レンダリング */

@@ -36,6 +36,11 @@ class App extends React.Component<Prop, State> {
     };
   }
 
+  /** 技術リンククリックハンドラ */
+  skillClickHandler = (skillName : string) => (event : React.MouseEvent<HTMLElement, MouseEvent>) => {
+    this.setState({ contents : <Works skillFilters={[skillName]} /> });
+  }
+
   /** 固定のナビゲーション */
   staticLinks : Links[] = [
     [
@@ -51,7 +56,7 @@ class App extends React.Component<Prop, State> {
         text : '技術',
         icon : <Stars />,
         click : (event) => {
-          this.setState({ contents : <Skills /> });
+          this.setState({ contents : <Skills clickHandler={this.skillClickHandler} /> });
         },
         closeMenuAfterClick : true
       },
@@ -68,7 +73,6 @@ class App extends React.Component<Prop, State> {
         icon : <Wallpaper />,
         click : (event) => {
           window.open('https://www.micknabewata.com/');
-          this.setState({ contents : <Works /> });
         },
         closeMenuAfterClick : true
       }

@@ -5,14 +5,15 @@ const styles = (theme : Theme) =>
   createStyles({
     card : {
       [theme.breakpoints.up('md')]:{
-        width : `calc(-${theme.spacing.unit + 8}px + ${100 / 3}%)`
+        width : `calc(-${theme.spacing.unit + 8}px + ${100 / 3}%)`,
+        height : '460px'
       },
       [theme.breakpoints.down('sm')]:{
-        width : 'calc(-12px + 100%)'
+        width : 'calc(-12px + 100%)',
+        height : 'auto'
       },
       margin : theme.spacing.unit,
-      float : 'left',
-      height : '193px'
+      float : 'left'
     },
     skillName : {
       width : '70%',
@@ -21,7 +22,8 @@ const styles = (theme : Theme) =>
     stars : {
     },
     star : {
-      fontSize : '13px'
+      width : '15px',
+      height : '15px'
     },
     skill : {
       margin : '5px'
