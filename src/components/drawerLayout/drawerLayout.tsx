@@ -64,10 +64,24 @@ class DrawerLayout extends React.Component<Prop, State> {
   };
 
   /** ナビゲーションクリック */ 
-  handleClick = (callBack? : (event : React.MouseEvent<HTMLElement, MouseEvent>) => void | undefined, closeMenuAfterClick? : boolean | false) => {
+  handleClick = (link : Link) => {
     return (event : React.MouseEvent<HTMLElement, MouseEvent>) => { 
-      if(callBack) callBack(event);
-      if(closeMenuAfterClick) this.setState({ mobileOpen: false });
+      if(link.click) link.click(event);
+      if(link.closeMenuAfterClick) this.setState({ mobileOpen: false });
+      
+      this.props.links.forEach((links) => {
+        links.forEach((l) => {
+          if(l.text === link.text)
+          {
+            l.isSelected = true;
+          }
+          else
+          {
+            l.isSelected = false;
+          }
+        });
+      });
+
     };
   }
 
@@ -87,7 +101,7 @@ class DrawerLayout extends React.Component<Prop, State> {
               <ListItem 
                 button 
                 key={link.text} 
-                onClick={ this.handleClick(link.click, link.closeMenuAfterClick) } 
+                onClick={ this.handleClick(link) } 
                 className={this.props.classes.linkItem + ' ' + ((link.isSelected)? this.props.classes.selected : '') } >
                 {(link.icon !== undefined)? <ListItemIcon>{link.icon}</ListItemIcon> : <React.Fragment />}
                 <ListItemText primary={link.text} disableTypography={true} className={this.props.classes.linkText} />

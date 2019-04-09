@@ -38,7 +38,21 @@ class App extends React.Component<Prop, State> {
 
   /** 技術リンククリックハンドラ */
   skillClickHandler = (skillName : string) => (event : React.MouseEvent<HTMLElement, MouseEvent>) => {
-    this.setState({ contents : <Works skillFilters={[skillName]} /> });
+    this.setState({ 
+      contents : <Works skillFilters={[skillName]} />
+    });
+    this.state.links.forEach((links) => {
+      links.forEach((l) => {
+        if(l.text === '開発実績')
+        {
+          l.isSelected = true;
+        }
+        else
+        {
+          l.isSelected = false;
+        }
+      });
+    });
   }
 
   /** 固定のナビゲーション */
@@ -50,7 +64,8 @@ class App extends React.Component<Prop, State> {
         click : (event) => {
           this.setState({ contents : <Hello /> });
         },
-        closeMenuAfterClick : true
+        closeMenuAfterClick : true,
+        isSelected : true
       },
       {
         text : '技術',

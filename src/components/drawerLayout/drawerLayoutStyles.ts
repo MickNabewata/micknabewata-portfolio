@@ -59,7 +59,7 @@ const styles = (theme : Theme) =>
       }
     },
     selected : {
-      backgroundColor : 'red'
+      backgroundColor : 'lightgray'
     },
     linkText : {
       fontSize : 14
