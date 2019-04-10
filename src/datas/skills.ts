@@ -24,7 +24,7 @@ export const skills : SkillCategory[] = [
         {
           Name : 'C#',
           Stars : 5,
-          HasWork : false
+          HasWork : true
         },
         {
           Name : 'TYPESCRIPT',
@@ -42,29 +42,19 @@ export const skills : SkillCategory[] = [
           HasWork : true
         },
         {
-          Name : 'POWERSHELL',
-          Stars : 5,
-          HasWork : false
-        },
-        {
           Name : 'VBA',
           Stars : 5,
-          HasWork : false
-        },
-        {
-          Name : 'VB SCRIPT',
-          Stars : 4,
-          HasWork : false
+          HasWork : true
         },
         {
           Name : 'JAVA',
           Stars : 3,
-          HasWork : false
+          HasWork : true
         },
         {
           Name : 'PHP',
           Stars : 3,
-          HasWork : false
+          HasWork : true
         },
         {
           Name : 'PYTHON',
@@ -74,7 +64,7 @@ export const skills : SkillCategory[] = [
         {
           Name : 'OBJECTIVE-C',
           Stars : 2,
-          HasWork : false
+          HasWork : true
         },
         {
           Name : 'C',
@@ -94,17 +84,17 @@ export const skills : SkillCategory[] = [
         {
           Name : 'サーバーサイド',
           Stars : 5,
-          HasWork : false
+          HasWork : true
         },
         {
           Name : 'WINDOWSデスクトップ(EXE)',
           Stars : 5,
-          HasWork : false
+          HasWork : true
         },
         {
           Name : 'WINDOWSコンソール(EXE)',
           Stars : 5,
-          HasWork : false
+          HasWork : true
         },
         {
           Name : 'SHAREPOINT FRAMEWORK',
@@ -114,7 +104,7 @@ export const skills : SkillCategory[] = [
         {
           Name : 'WPF',
           Stars : 4,
-          HasWork : false
+          HasWork : true
         },
         {
           Name : 'UWP',
@@ -129,12 +119,12 @@ export const skills : SkillCategory[] = [
         {
           Name : 'IPHONE',
           Stars : 2,
-          HasWork : false
+          HasWork : true
         },
         {
           Name : 'ANDROID',
           Stars : 2,
-          HasWork : false
+          HasWork : true
         }
       ],
     },
@@ -144,12 +134,12 @@ export const skills : SkillCategory[] = [
         {
           Name : 'SHAREPOINT SERVER',
           Stars : 5,
-          HasWork : false
+          HasWork : true
         },
         {
           Name : 'SHAREPOINT ONLINE',
           Stars : 5,
-          HasWork : false
+          HasWork : true
         },
         {
           Name : 'MICROSOFT FLOW',
@@ -164,7 +154,7 @@ export const skills : SkillCategory[] = [
         {
           Name : 'POWER BI',
           Stars : 3,
-          HasWork : false
+          HasWork : true
         }
       ],
     },
@@ -174,7 +164,12 @@ export const skills : SkillCategory[] = [
         {
           Name : '.NET CORE/FRAMEWORK',
           Stars : 5,
-          HasWork : false
+          HasWork : true
+        },
+        {
+          Name : 'ASP.NET/ASP.NET CORE',
+          Stars : 5,
+          HasWork : true
         },
         {
           Name : 'REACT',
@@ -184,7 +179,7 @@ export const skills : SkillCategory[] = [
         {
           Name : 'BOOTSTRAP',
           Stars : 3,
-          HasWork : false
+          HasWork : true
         },
         {
           Name : 'STRUTS',
@@ -199,7 +194,7 @@ export const skills : SkillCategory[] = [
         {
           Name : 'CAKE PHP',
           Stars : 2,
-          HasWork : false
+          HasWork : true
         }
       ],
     },
@@ -209,7 +204,7 @@ export const skills : SkillCategory[] = [
         {
           Name : 'IIS',
           Stars : 5,
-          HasWork : false
+          HasWork : true
         },
         {
           Name : 'NODE.JS',
@@ -229,7 +224,7 @@ export const skills : SkillCategory[] = [
         {
           Name : 'SQL SERVER',
           Stars : 5,
-          HasWork : false
+          HasWork : true
         },
         {
           Name : 'ORACLE DATABASE',
@@ -239,7 +234,7 @@ export const skills : SkillCategory[] = [
         {
           Name : 'MYSQL',
           Stars : 3,
-          HasWork : false
+          HasWork : true
         }
       ],
     },
@@ -249,12 +244,12 @@ export const skills : SkillCategory[] = [
         {
           Name : 'AZURE',
           Stars : 4,
-          HasWork : false
+          HasWork : true
         },
         {
           Name : 'AWS',
           Stars : 3,
-          HasWork : false
+          HasWork : true
         },
         {
           Name : 'FIREBASE',
@@ -274,17 +269,17 @@ export const skills : SkillCategory[] = [
         {
           Name : 'SQL SERVER REPORTING SERVICES',
           Stars : 5,
-          HasWork : false
+          HasWork : true
         },
         {
           Name : 'POWER BI',
           Stars : 3,
-          HasWork : false
+          HasWork : true
         },
         {
           Name : 'COGNOS',
           Stars : 2,
-          HasWork : false
+          HasWork : true
         }
       ],
     }

@@ -59,7 +59,7 @@ class WorkCard extends React.Component<Prop, State> {
         <Card className={this.props.classes.card} key={this.props.workInfo.Name} >
           <CardMedia
             className={this.props.classes.media}
-            image={this.props.workInfo.ImageUrl}
+            image={(this.props.workInfo.ImageUrl)? this.props.workInfo.ImageUrl : '/NoImage.jpg'}
             title={this.props.workInfo.Name}
           />
           <CardContent>
@@ -122,7 +122,11 @@ class WorkCard extends React.Component<Prop, State> {
                     URL
                   </Typography>
                   <Typography component="p">
-                    {this.props.workInfo.URL}
+                    <a href={this.props.workInfo.URL} target='_blank' >{
+                      (this.props.workInfo.URLDisp)?
+                        this.props.workInfo.URLDisp :
+                        this.props.workInfo.URL
+                    }</a>
                   </Typography>
                 </Paper> :
                 null
@@ -134,7 +138,11 @@ class WorkCard extends React.Component<Prop, State> {
                     GitHub
                   </Typography>
                   <Typography component="p">
-                    {this.props.workInfo.GitHub}
+                    <a href={this.props.workInfo.GitHub} target='_blank' >{
+                      (this.props.workInfo.GitHubDisp)?
+                        this.props.workInfo.GitHubDisp :
+                        this.props.workInfo.GitHub
+                    }</a>
                   </Typography>
                 </Paper> :
                 null
