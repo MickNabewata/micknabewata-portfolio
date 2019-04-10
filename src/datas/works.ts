@@ -33,7 +33,7 @@ export const works : Work[] = [
         Skill : ['TYPESCRIPT', 'REACT', 'FIREBASE', 'JAVASCRIPT', 'HTML/CSS', 'WEBフロントエンド', 'NODE.JS'],
         Role : ['メンバー'],
         Members : 1,
-        URL : 'http://portfolio.micknabewata.com/',
+        URL : 'https://portfolio.micknabewata.com/',
         URLDisp : '鍋綿ポートフォリオ',
         GitHub : 'https://github.com/MickNabewata/micknabewata-portfolio',
         GitHubDisp : 'micknabewata-portfolio',
