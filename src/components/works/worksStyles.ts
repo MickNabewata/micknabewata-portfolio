@@ -11,11 +11,11 @@ const styles = (theme : Theme) =>
       marginRight : '20px'
     },
     addFilterButton : {
-      [theme.breakpoints.up('sm')] : {
+      [theme.breakpoints.up('md')] : {
         marginLeft : '20px',
         verticalAlign : 'bottom'
       },
-      [theme.breakpoints.down('xs')] : {
+      [theme.breakpoints.down('sm')] : {
         marginTop : '20px',
         display : 'block'
       }
