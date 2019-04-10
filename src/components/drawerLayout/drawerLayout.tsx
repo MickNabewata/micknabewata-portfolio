@@ -13,6 +13,9 @@ import ListItemText from '@material-ui/core/ListItemText';
 import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
+import Card from '@material-ui/core/Card';
+import MailOutline from '@material-ui/icons/MailOutline';
+import { Fab } from '@material-ui/core';
 
 /** ナビゲーションリンク */
 export type Link = {
@@ -41,6 +44,7 @@ interface Prop extends WithStyles<typeof styles> {
 
 /** ステート型定義 */
 type State = {
+  /** Drawerの開閉状態(モバイル表示で利用) */
   mobileOpen : boolean
 };
 
@@ -83,7 +87,7 @@ class DrawerLayout extends React.Component<Prop, State> {
       });
 
     };
-  }
+  };
 
   num : number = 0;
 
@@ -122,6 +126,23 @@ class DrawerLayout extends React.Component<Prop, State> {
         {this.props.links.map((links : Link[]) => {
           return this.createList(links);
         })}
+        <Card className={this.props.classes.contactField}>
+          <Fab 
+            size='small' 
+            href='https://twitter.com/intent/tweet?screen_name=MNabewata' 
+            target='_blank' 
+            className={this.props.classes.contactButton}>
+            <img src='./TwitterIcon.png' className={this.props.classes.contactImage}/>
+          </Fab>
+          <Fab 
+            size='small' 
+            color='primary' 
+            aria-label='MailTo' 
+            href='mailto:aquarius.mikito.0123@gmail.com'
+            className={this.props.classes.contactButton}>
+            <MailOutline />
+          </Fab>
+        </Card>
       </div>
     );
   }

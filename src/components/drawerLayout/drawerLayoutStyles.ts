@@ -63,6 +63,26 @@ const styles = (theme : Theme) =>
     },
     linkText : {
       fontSize : 14
+    },
+    contactField : {
+      backgroundColor : 'RGBA(255,255,255,0.7)',
+      margin : '5px auto',
+      padding : '10px',
+      textAlign : 'center',
+      width : '60%'
+    },
+    contactButton : {
+      padding : 0,
+      marginRight : '5px',
+      marginLeft : '5px'
+    },
+    contactImage : {
+      width : '100%',
+      height : '100%'
+    },
+    twitterFrame : {
+      width : '500px',
+      height : '500px'
     }
   });
 

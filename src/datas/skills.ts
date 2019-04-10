@@ -113,7 +113,7 @@ export const skills : SkillCategory[] = [
         },
         {
           Name : 'WEBフロントエンド',
-          Stars : 3,
+          Stars : 4,
           HasWork : true
         },
         {
@@ -212,7 +212,7 @@ export const skills : SkillCategory[] = [
           HasWork : true
         },
         {
-          Name : 'APATCHE TOMCAT',
+          Name : 'APACHE TOMCAT',
           Stars : 2,
           HasWork : false
         }
