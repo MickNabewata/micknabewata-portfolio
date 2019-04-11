@@ -1,9 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import WorkCard from './skillCard';
+import SkillCard from './skillCard';
 
 it('クラッシュすることなくレンダリングができること', () => {
   const div = document.createElement('div');
-  ReactDOM.render(<WorkCard />, div);
+  const skill = {
+    Category : '',
+    Skills : []
+  }
+  ReactDOM.render(<SkillCard skillInfo={skill} clickHandler={()=> () => {}} />, div);
   ReactDOM.unmountComponentAtNode(div);
 });

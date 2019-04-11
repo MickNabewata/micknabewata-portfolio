@@ -181,7 +181,6 @@ class DrawerLayout extends React.Component<Prop, State> {
         <nav className={this.props.classes.drawer}>
           {/* 
             画面幅が狭い場合に表示するDrawer
-            SEO対策(重複コンテンツの回避)を行いたい場合には、この部分をJavaScriptで記述します。
           */}
           <Hidden mdUp implementation='css'>
             <Drawer
@@ -198,7 +197,6 @@ class DrawerLayout extends React.Component<Prop, State> {
           </Hidden>
           {/* 
             画面幅が広い場合に表示するDrawer
-            SEO対策(重複コンテンツの回避)を行いたい場合には、この部分をJavaScriptで記述します。
           */}
           <Hidden smDown implementation='css'>
             <div>

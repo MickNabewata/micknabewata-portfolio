@@ -4,6 +4,18 @@ import WorkCard from './workCard';
 
 it('クラッシュすることなくレンダリングができること', () => {
   const div = document.createElement('div');
-  ReactDOM.render(<WorkCard />, div);
+  const work = {
+    Name : '',
+    Skill : [],
+    Role : [],
+    Members : 0,
+    Overview : []
+  };
+  ReactDOM.render(
+    <WorkCard 
+      workInfo={work} 
+      skillClickHandler={() => () => {}} 
+      roleClickHandler={() => () => {}} />,
+    div);
   ReactDOM.unmountComponentAtNode(div);
 });
