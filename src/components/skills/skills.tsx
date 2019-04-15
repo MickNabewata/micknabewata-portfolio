@@ -6,8 +6,6 @@ import { SkillCategory, skills } from '../../datas/skills';
 
 /** プロパティ型定義 */
 interface Prop extends WithStyles<typeof styles> {
-  /** 技術リンククリックハンドラ */
-  clickHandler : (skillName : string)  => (event : React.MouseEvent<HTMLElement, MouseEvent>) => void
 }
 
 /** ステート型定義 */
@@ -49,8 +47,7 @@ class Skills extends React.Component<Prop, State> {
                   return (
                     <SkillCard 
                       skillInfo={skill} 
-                      key={`skillCard-${skill.Category}`}
-                      clickHandler={this.props.clickHandler} />)
+                      key={`skillCard-${skill.Category}`} />)
                 })
             }
           </div>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom'
 import styles from './drawerLayoutStyles';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import AppBar from '@material-ui/core/AppBar';
@@ -18,9 +19,11 @@ import MailOutline from '@material-ui/icons/MailOutline';
 import { Fab } from '@material-ui/core';
 
 /** ナビゲーションリンク */
-export type Link = {
+export type NavLink = {
   /** 表示文字列 */
   text : string,
+  /** URL */
+  url : string,
   /** 表示アイコン */
   icon? : JSX.Element | undefined,
   /** クリックイベント */
@@ -32,18 +35,18 @@ export type Link = {
 };
 
 /** ナビゲーションリンク配列 */
-export type Links = Link[];
+export type NavLinks = NavLink[];
 
 /** プロパティ型定義 */
 interface Prop extends WithStyles<typeof styles> {
   /** ナビゲーションリンク(1要素ずつDividerで区切られる) */
-  links : Links[],
-  /** メイン領域に表示するコンポーネント */
-  contents : JSX.Element
+  links : NavLinks[]
 }
 
 /** ステート型定義 */
 type State = {
+  /** ナビゲーションリンク(1要素ずつDividerで区切られる) */
+  links : NavLinks[],
   /** Drawerの開閉状態(モバイル表示で利用) */
   mobileOpen : boolean
 };
@@ -58,6 +61,7 @@ class DrawerLayout extends React.Component<Prop, State> {
 
     // ステート初期化
     this.state = {
+      links : this.props.links,
       mobileOpen : false
     };
   }
@@ -68,48 +72,44 @@ class DrawerLayout extends React.Component<Prop, State> {
   };
 
   /** ナビゲーションクリック */ 
-  handleClick = (link : Link) => {
-    return (event : React.MouseEvent<HTMLElement, MouseEvent>) => { 
+  handleClick = (link : NavLink) => {
+    return (event : React.MouseEvent<HTMLElement, MouseEvent>) => {
+      // クリックイベント発火
       if(link.click) link.click(event);
+      // メニューを閉じる
       if(link.closeMenuAfterClick) this.setState({ mobileOpen: false });
-      
-      this.props.links.forEach((links) => {
-        links.forEach((l) => {
-          if(l.text === link.text)
-          {
-            l.isSelected = true;
-          }
-          else
-          {
-            l.isSelected = false;
-          }
-        });
-      });
-
     };
   };
 
-  num : number = 0;
+  linksCount : number = 0;
 
   /** Drawer内のLinkコントロールを生成 */
-  createList(links : Link[]) : JSX.Element
+  createList(links : NavLink[]) : JSX.Element
   {
-    this.num++;
-
+    this.linksCount++;
     return (
-      <React.Fragment key={'fragment-' + this.num}>
+      <React.Fragment key={`navFrag-${this.linksCount}`}>
         <Divider />
         <List>
-          {links.map((link : Link) => {
-            return (
+          {links.map((link : NavLink) => {
+            let listItem = (
               <ListItem 
                 button 
-                key={link.text} 
+                key={`navItem-${link.text}`} 
                 onClick={ this.handleClick(link) } 
                 className={this.props.classes.linkItem + ' ' + ((link.isSelected)? this.props.classes.selected : '') } >
                 {(link.icon !== undefined)? <ListItemIcon>{link.icon}</ListItemIcon> : <React.Fragment />}
                 <ListItemText primary={link.text} disableTypography={true} className={this.props.classes.linkText} />
               </ListItem>
+            );
+            return (
+              (link.url.startsWith('http'))?
+                <a href={link.url} target='_blank' key={`navlink-${link.text}`}>
+                  {listItem}
+                </a>:
+                <Link to={link.url} key={`navlink-${link.text}`} >
+                  {listItem}
+                </Link>
             )
           })}
         </List>
@@ -120,10 +120,12 @@ class DrawerLayout extends React.Component<Prop, State> {
   /** Drawerコントロールを生成 */
   createDrawer() : JSX.Element
   {
+    this.changeNavigationSelection();
+
     return (
       <div>
         <div className={this.props.classes.toolbar} />
-        {this.props.links.map((links : Link[]) => {
+        {this.state.links.map((links : NavLink[]) => {
           return this.createList(links);
         })}
         <Card className={this.props.classes.contactField}>
@@ -147,9 +149,22 @@ class DrawerLayout extends React.Component<Prop, State> {
     );
   }
 
-  /** タイトルを取得 */
-  getSiteTitle() : string {
-    return '鍋綿ポートフォリオ';
+  /** ナビゲーションの選択状態を切替 */
+  changeNavigationSelection()
+  {
+    // 選択状態を切り替える
+    this.state.links.forEach((links) => {
+      links.forEach((l) => {
+        if(l.url === location.pathname)
+        {
+          l.isSelected = true;
+        }
+        else
+        {
+          l.isSelected = false;
+        }
+      });
+    });
   }
 
   /** レンダリング */
@@ -174,7 +189,7 @@ class DrawerLayout extends React.Component<Prop, State> {
             </IconButton>
             {/* タイトル文言 */}
             <Typography color='inherit' className={this.props.classes.title} noWrap>
-              {this.getSiteTitle()}
+              鍋綿ポートフォリオ
             </Typography>
           </Toolbar>
         </AppBar>
@@ -213,7 +228,7 @@ class DrawerLayout extends React.Component<Prop, State> {
         {/* メイン領域 */}
         <main className={this.props.classes.content}>
           <div className={this.props.classes.toolbar} />
-          {this.props.contents}
+          {this.props.children}
         </main>
       </div>
     );

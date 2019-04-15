@@ -1,4 +1,5 @@
 import React from 'react';
+import { BrowserRouter, Route } from 'react-router-dom';
 import styles from './appStyles';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import AccountBox from '@material-ui/icons/AccountBox';
@@ -6,7 +7,7 @@ import Stars from '@material-ui/icons/Stars';
 import Work from '@material-ui/icons/Work';
 import Wallpaper from '@material-ui/icons/Wallpaper';
 import withRoot from '../../withRoot';
-import DrawerLayout, { Links } from '../drawerLayout/drawerLayout';
+import DrawerLayout, { NavLinks } from '../drawerLayout/drawerLayout';
 import Hello from '../hello/hello';
 import Skills from '../skills/skills';
 import Works from '../works/works';
@@ -17,8 +18,7 @@ interface Prop extends WithStyles<typeof styles> {
 
 /** ステート型定義 */
 type State = {
-  contents : JSX.Element,
-  links : Links[]
+  links : NavLinks[]
 };
 
 /** コンポーネント定義 */
@@ -31,64 +31,36 @@ class App extends React.Component<Prop, State> {
 
     // ステート初期化
     this.state = {
-      contents : <Hello />,
       links : this.staticLinks
     };
   }
 
-  /** 技術リンククリックハンドラ */
-  skillClickHandler = (skillName : string) => (event : React.MouseEvent<HTMLElement, MouseEvent>) => {
-    this.setState({ 
-      contents : <Works skillFilters={[skillName]} />
-    });
-    this.state.links.forEach((links) => {
-      links.forEach((l) => {
-        if(l.text === '開発実績')
-        {
-          l.isSelected = true;
-        }
-        else
-        {
-          l.isSelected = false;
-        }
-      });
-    });
-  }
-
   /** 固定のナビゲーション */
-  staticLinks : Links[] = [
+  staticLinks : NavLinks[] = [
     [
       {
         text : '自己紹介',
+        url : '/',
         icon : <AccountBox />,
-        click : (event) => {
-          this.setState({ contents : <Hello /> });
-        },
         closeMenuAfterClick : true,
-        isSelected : true
+        isSelected : false
       },
       {
         text : '技術',
+        url : '/skills',
         icon : <Stars />,
-        click : (event) => {
-          this.setState({ contents : <Skills clickHandler={this.skillClickHandler} /> });
-        },
         closeMenuAfterClick : true
       },
       {
         text : '開発実績',
+        url : '/works',
         icon : <Work />,
-        click : (event) => {
-          this.setState({ contents : <Works /> });
-        },
         closeMenuAfterClick : true
       },
       {
         text : 'ブログ',
+        url : 'https://www.micknabewata.com',
         icon : <Wallpaper />,
-        click : (event) => {
-          window.open('https://www.micknabewata.com/');
-        },
         closeMenuAfterClick : true
       }
     ]
@@ -97,7 +69,13 @@ class App extends React.Component<Prop, State> {
   /** レンダリング */
   render() {
     return (
-      <DrawerLayout links={ this.state.links } contents={ this.state.contents } />
+      <BrowserRouter>
+        <DrawerLayout links={ this.state.links }>
+          <Route exact path='/' component={() => { return <Hello />; }} />
+          <Route exact path='/skills' component={() => { return <Skills />; }} />
+          <Route exact path='/works' component={() => { return <Works />; }} />
+        </DrawerLayout>
+      </BrowserRouter>
     );
   }
 }

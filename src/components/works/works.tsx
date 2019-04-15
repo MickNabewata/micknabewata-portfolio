@@ -1,4 +1,5 @@
 import React, { ChangeEvent } from 'react';
+import { Link } from 'react-router-dom';
 import styles from './worksStyles';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import TextField from '@material-ui/core/TextField';
@@ -6,6 +7,8 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { Button } from '@material-ui/core';
 import WorkCard from '../workCard/workCard';
 import { Work, works } from '../../datas/works';
+import QueryUtil from '../../utils/queryUtil';
+import { string } from 'prop-types';
 
 /** プロパティ型定義 */
 interface Prop extends WithStyles<typeof styles> {
@@ -108,8 +111,10 @@ class Works extends React.Component<Prop, State> {
     let datas = works;
 
     // フィルタ
-    let skills : string[] = (this.state.skills)? this.state.skills : [];
-    let roles : string[] = (this.state.roles)? this.state.roles : [];
+    let q = new QueryUtil();
+    let params = q.get().params;
+    let skills : string[] = (params && params.skills)? params.skills.split(',') : [];
+    let roles : string[] = (params && params.rolles)? params.rolles.split(',') : [];
 
     if(skills && skills.length > 0)
     {
@@ -146,6 +151,36 @@ class Works extends React.Component<Prop, State> {
     return datas;
   }
 
+  /** 現在のURLパラメータに指定の値を追加したものを返却 */
+  createParams(skill? : string , role? : string) {
+    let q = new QueryUtil();
+    let ret : string  = '';
+    let temp : string[] = [];
+    let params = q.get().params;
+
+    if(params)
+    {
+      if(params.skills && skill && skill.length > 0)
+      {
+        let skills = Array.from(new Set([...params.skills, ...[skill]]));
+        temp.push(`skills=${skills.join(',')}`);
+      }
+
+      if(params.roles && role && role.length > 0)
+      {
+        let roles = Array.from(new Set([...params.roles, ...[role]]));
+        temp.push(`roles=${roles.join(',')}`);
+      }
+    }
+
+    if(temp.length > 0)
+    {
+      ret = `?${temp.join('&')}`;
+    }
+
+    return ret;
+  }
+
   /** レンダリング */
   render() {
 
@@ -173,9 +208,11 @@ class Works extends React.Component<Prop, State> {
               onChange = {this.handleChange('roleInput')}
               onKeyDown = {this.handleEnter('roleInput', this.state.roleInput)}
             />
-            <Button variant='contained' color='primary' className={this.props.classes.addFilterButton} onClick={this.handleAddFilter} >
-              絞込みに追加
-            </Button>
+            <a href={`/works${this.createParams(this.state.skillInput, this.state.roleInput)}`}>
+              <Button variant='contained' color='primary' className={this.props.classes.addFilterButton}>
+                絞込みに追加
+              </Button>
+            </a>
           </div>
           <div className={this.props.classes.filters}>
             {(this.state.skills == undefined)? null : this.state.skills.map((skill) => {

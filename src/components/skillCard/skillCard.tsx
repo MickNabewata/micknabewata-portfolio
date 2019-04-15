@@ -12,9 +12,7 @@ import { SkillCategory, Skill } from '../../datas/skills';
 /** プロパティ型定義 */
 interface Prop extends WithStyles<typeof styles> {
   /** 技術情報 */
-  skillInfo : SkillCategory,
-  /** 技術リンククリックハンドラ */
-  clickHandler : (skillName : string)  => (event : React.MouseEvent<HTMLElement, MouseEvent>) => void
+  skillInfo : SkillCategory
 }
 
 /** ステート型定義 */
@@ -61,14 +59,15 @@ class SkillCard extends React.Component<Prop, State> {
                 <span className={this.props.classes.skillName}>
                   {
                     (skill.HasWork)?
+                    <a href={`/works?skills=${encodeURIComponent(skill.Name)}`} key={`skill_link-${skill.Name}`} >
                       <Button 
                         color='primary' 
                         key={`link-${skill.Name}`} 
-                        className={this.props.classes.skillLink}
-                        onClick={this.props.clickHandler(skill.Name)}>
+                        className={this.props.classes.skillLink}>
                           {skill.Name}
-                      </Button> :
-                      <span className={this.props.classes.skillText}>{skill.Name}</span>
+                      </Button>
+                    </a> :
+                    <span className={this.props.classes.skillText}>{skill.Name}</span>
                   }
                 </span>
                 <span className={this.props.classes.stars} >

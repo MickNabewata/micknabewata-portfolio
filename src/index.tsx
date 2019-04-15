@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/app/app';
 import * as serviceWorker from './serviceWorker';
-import * as firebase from 'firebase';
+import { initializeApp } from 'firebase/app';
 import { Config } from './utils/configUtil';
 
 // Firebase初期化
@@ -14,7 +14,7 @@ const fbConfig = {
     storageBucket: Config.STORAGE_BUCKET,
     messagingSenderId: Config.MESSAGING_SENDER_ID
 };
-firebase.initializeApp(fbConfig);
+initializeApp(fbConfig);
 
 ReactDOM.render(<App />, document.querySelector('#root'));
 
