@@ -1,13 +1,18 @@
-import merge from 'lodash.merge';
+import * as deepmerge from 'deepmerge'
 
+/** URLパラメータ操作ユーティリティ */
 export default class QueryUtil {
 
     /** URLパラメータ */
     params : any = {};
 
+    /** 区切り文字 */
+    delimiter : string | undefined = undefined;
+
     /** URLパラメータを取得 */
     get(delimiter? : string) : QueryUtil {
         this.params = {};
+        this.delimiter = delimiter;
 
         //URLパラメータを文字列で取得(?含む)
         let urlParamStr = window.location.search;
@@ -24,7 +29,7 @@ export default class QueryUtil {
                 //pramsオブジェクトにパラメータを追加
                 this.params = {
                     ...this.params,
-                    [temp[0]]: (delimiter)? temp[1].split(delimiter) : temp[1]
+                    [temp[0]]: (this.delimiter)? temp[1].split(this.delimiter) : temp[1]
                 };
             })
         }
@@ -39,7 +44,7 @@ export default class QueryUtil {
         if(params)
         {
             if(!this.params) this.params = {};
-            merge(this.params, params);
+            this.params = deepmerge.all([this.params, params]);
         }
 
         /** 自身のインスタンスを返却 */
@@ -49,11 +54,22 @@ export default class QueryUtil {
     /** URLパラメータから値を削除 */
     remove(key : string, value : string) : QueryUtil {
 
-        if(key && key.length > 0 && value && value.length > 0) {
-            let p : string[] = this.params[key];
-            if(p)
+        if(key && key.length > 0 && value && value.length > 0 && this.params[key]) {
+            if(Array.isArray(this.params[key]))
             {
-                this.params = p.filter(n => n != value);
+                let p : string[] = this.params[key];
+                if(p)
+                {
+                    this.params[key] = p.filter(n => n != value);
+                }
+            }
+            else
+            {
+                let p : string = this.params[key];
+                if(p)
+                {
+                    this.params[key] = p.replace(value, '');
+                }
             }
         }
 

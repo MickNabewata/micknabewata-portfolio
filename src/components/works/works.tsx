@@ -45,8 +45,11 @@ class Works extends React.Component<Prop, State> {
     };
   }
 
+  /** URLパラメータ操作ユーティリティ */
+  queryUtil = new QueryUtil().get(',');
+
   /** 絞込み入力イベント */
-  handleChange = (name : string) => (e : ChangeEvent<HTMLTextAreaElement>) => {
+  handleInputChange = (name : string) => (e : ChangeEvent<HTMLTextAreaElement>) => {
     this.setState({
       [name]: e.target.value
     });
@@ -64,17 +67,6 @@ class Works extends React.Component<Prop, State> {
   handleAddFilter = (e : React.MouseEvent<HTMLElement, MouseEvent>) => {
     this.addFilter('skillInput', this.state.skillInput);
     this.addFilter('roleInput', this.state.roleInput);
-  }
-
-  /** フィルタ削除イベント */
-  handleDeleteFilter = (filterKey : 'skills' | 'roles', filterValue : string) => (e : React.MouseEvent<HTMLElement, MouseEvent>) => {
-    let values = (filterKey == 'skills')? this.state.skills : this.state.roles;
-    if(values != undefined)
-    {
-      this.setState({
-        [filterKey] : values.filter((v) => v != filterValue)
-      });
-    }
   }
 
   /** 技術クリックイベント */
@@ -102,6 +94,11 @@ class Works extends React.Component<Prop, State> {
         [filterKey] : ''
       });
     }
+  }
+
+  createRemoveLink(filterKey : 'skills' | 'roles', value : string) : string {
+    let newParam = this.queryUtil.remove(filterKey, value).params;
+    return '';
   }
 
   /** 開発実績を取得 */
@@ -196,7 +193,7 @@ class Works extends React.Component<Prop, State> {
               label = '技術'
               value = {this.state.skillInput}
               type='search'
-              onChange = {this.handleChange('skillInput')}
+              onChange = {this.handleInputChange('skillInput')}
               className = {this.props.classes.field}
               onKeyDown = {this.handleEnter('skillInput', this.state.skillInput)}
             />
@@ -205,7 +202,7 @@ class Works extends React.Component<Prop, State> {
               label = '役割'
               value = {this.state.roleInput}
               type='search'
-              onChange = {this.handleChange('roleInput')}
+              onChange = {this.handleInputChange('roleInput')}
               onKeyDown = {this.handleEnter('roleInput', this.state.roleInput)}
             />
             <a href={`/works${this.createParams(this.state.skillInput, this.state.roleInput)}`}>
@@ -217,28 +214,30 @@ class Works extends React.Component<Prop, State> {
           <div className={this.props.classes.filters}>
             {(this.state.skills == undefined)? null : this.state.skills.map((skill) => {
               return (
-                <Button
-                  variant="contained" 
-                  color="default" 
-                  className={this.props.classes.filterButton} 
-                  onClick={this.handleDeleteFilter('skills', skill)}
-                  key={`skillFilter-${skill}`}  >
-                  {skill}
-                  <DeleteIcon className={this.props.classes.filterIcon} />
-                </Button>
+                <a href={this.createRemoveLink('skills', skill)}>
+                  <Button
+                    variant="contained" 
+                    color="default" 
+                    className={this.props.classes.filterButton}
+                    key={`skillFilter-${skill}`}  >
+                    {skill}
+                    <DeleteIcon className={this.props.classes.filterIcon} />
+                  </Button>
+                </a>
               )
             })}
             {(this.state.roles == undefined)? null : this.state.roles.map((role) => {
               return (
-                <Button
-                  variant="contained" 
-                  color="default" 
-                  className={this.props.classes.filterButton} 
-                  onClick={this.handleDeleteFilter('roles', role)}
-                  key={`roleFilter-${role}`} >
-                  {role}
-                  <DeleteIcon className={this.props.classes.filterIcon} />
-                </Button>
+                <a href={this.createRemoveLink('roles', role)}>
+                  <Button
+                    variant="contained" 
+                    color="default" 
+                    className={this.props.classes.filterButton}
+                    key={`roleFilter-${role}`} >
+                    {role}
+                    <DeleteIcon className={this.props.classes.filterIcon} />
+                  </Button>
+                </a>
               )
             })}
           </div>
