@@ -129,3 +129,46 @@ it('remove - 配列 - 要素なし', () => {
     q.remove('test2', 'aaa');
     expect(q.params).toEqual({ test : ['aaa'] });
 });
+
+it('toString - getせずtoString', () => {
+    let q = new QueryUtil();
+    let result = q.toString(['test', 'test2']);
+    expect(result).toEqual('?test=&test2=');
+});
+
+it('toString - 文字列', () => {
+    let q = new QueryUtil();
+    q.params = { test : 'aaa' };
+    let result = q.toString(['test']);
+    expect(result).toEqual('?test=aaa');
+});
+
+it('toString - 文字列 - 複数', () => {
+    let q = new QueryUtil();
+    q.params = { test : 'aaa', test2 : 'bbb' };
+    let result = q.toString(['test', 'test2']);
+    expect(result).toEqual('?test=aaa&test2=bbb');
+});
+
+it('toString - 配列', () => {
+    let q = new QueryUtil();
+    q.params = { test : ['aaa'] };
+    q.delimiter = ',';
+    let result = q.toString(['test']);
+    expect(result).toEqual('?test=aaa');
+});
+
+it('toString - 配列 - 複数', () => {
+    let q = new QueryUtil();
+    q.params = { test : ['aaa', 'bbb'], test2 : ['ccc'] };
+    q.delimiter = '|';
+    let result = q.toString(['test', 'test2']);
+    expect(result).toEqual('?test=aaa|bbb&test2=ccc');
+});
+
+it('toString - 配列 - 複数 - delimiterなし', () => {
+    let q = new QueryUtil();
+    q.params = { test : ['aaa', 'bbb'], test2 : ['ccc'] };
+    let result = q.toString(['test', 'test2']);
+    expect(result).toEqual('?test=aaa,bbb&test2=ccc');
+});

@@ -76,4 +76,20 @@ export default class QueryUtil {
         // 自身のインスタンスを返却
         return this;
     }
+
+    /** URLパラメータを文字列化 */
+    toString(keys : string[]) : string {
+        let ret : string = '';
+
+        if(keys) {
+            let temp : string[] = [];
+            keys.forEach((key)=> {
+                let val = this.params[key];
+                temp.push(`${key}=${(val)? (Array.isArray(val)? val.join(this.delimiter) : val) : ''}`);
+            });
+            ret = temp.join('&');
+        }
+
+        return (ret.length > 0)? `?${ret}` : '';
+    }
 }

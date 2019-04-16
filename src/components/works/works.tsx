@@ -96,9 +96,14 @@ class Works extends React.Component<Prop, State> {
     }
   }
 
-  createRemoveLink(filterKey : 'skills' | 'roles', value : string) : string {
-    let newParam = this.queryUtil.remove(filterKey, value).params;
-    return '';
+  /** 追加リンクのURLを生成 */
+  createAddUrl(filterKey : 'skills' | 'roles', value : string) : string {
+    return `/works${this.queryUtil.add({ filterKey : value}).toString(['skills', 'filters'])}`;
+  }
+
+  /** 削除リンクのURLを生成 */
+  createRemoveURL(filterKey : 'skills' | 'roles', value : string) : string {
+    return `/works${this.queryUtil.remove(filterKey, value).toString(['skills', 'filters'])}`;
   }
 
   /** 開発実績を取得 */
@@ -214,7 +219,7 @@ class Works extends React.Component<Prop, State> {
           <div className={this.props.classes.filters}>
             {(this.state.skills == undefined)? null : this.state.skills.map((skill) => {
               return (
-                <a href={this.createRemoveLink('skills', skill)}>
+                <a href={this.createRemoveURL('skills', skill)}>
                   <Button
                     variant="contained" 
                     color="default" 
@@ -228,7 +233,7 @@ class Works extends React.Component<Prop, State> {
             })}
             {(this.state.roles == undefined)? null : this.state.roles.map((role) => {
               return (
-                <a href={this.createRemoveLink('roles', role)}>
+                <a href={this.createRemoveURL('roles', role)}>
                   <Button
                     variant="contained" 
                     color="default" 
