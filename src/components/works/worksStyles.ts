@@ -10,6 +10,9 @@ const styles = (theme : Theme) =>
     field : {
       marginRight : '20px'
     },
+    addFilterLink : {
+      textDecoration : 'none'
+    },
     addFilterButton : {
       [theme.breakpoints.up('md')] : {
         marginLeft : '20px',
@@ -21,7 +24,9 @@ const styles = (theme : Theme) =>
       }
     },
     filters : {
-
+    },
+    filterLink : {
+      textDecoration : 'none'
     },
     filterButton : {
       margin: theme.spacing.unit,

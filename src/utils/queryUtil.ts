@@ -85,7 +85,10 @@ export default class QueryUtil {
             let temp : string[] = [];
             keys.forEach((key)=> {
                 let val = this.params[key];
-                temp.push(`${key}=${(val)? (Array.isArray(val)? val.join(this.delimiter) : val) : ''}`);
+                if(val && val.length > 0)
+                {
+                    temp.push(`${key}=${(Array.isArray(val)? val.join(this.delimiter) : val)}`);
+                }
             });
             ret = temp.join('&');
         }

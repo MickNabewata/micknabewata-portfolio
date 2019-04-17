@@ -6,6 +6,8 @@ import { SkillCategory, skills } from '../../datas/skills';
 
 /** プロパティ型定義 */
 interface Prop extends WithStyles<typeof styles> {
+  /** ナビゲーション発生時のコールバック */
+  navigationHandler? : (url : string) => {}
 }
 
 /** ステート型定義 */
@@ -47,7 +49,8 @@ class Skills extends React.Component<Prop, State> {
                   return (
                     <SkillCard 
                       skillInfo={skill} 
-                      key={`skillCard-${skill.Category}`} />)
+                      key={`skillCard-${skill.Category}`}
+                      navigationHandler={this.props.navigationHandler} />)
                 })
             }
           </div>

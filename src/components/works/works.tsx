@@ -8,12 +8,13 @@ import { Button } from '@material-ui/core';
 import WorkCard from '../workCard/workCard';
 import { Work, works } from '../../datas/works';
 import QueryUtil from '../../utils/queryUtil';
-import { string } from 'prop-types';
 
 /** プロパティ型定義 */
 interface Prop extends WithStyles<typeof styles> {
   /** 技術名フィルタ */
-  skillFilters? : string[]
+  skillFilters? : string[],
+  /** ナビゲーション発生時のコールバック */
+  navigationHandler? : (url : string) => {}
 }
 
 /** ステート型定義 */
@@ -45,9 +46,6 @@ class Works extends React.Component<Prop, State> {
     };
   }
 
-  /** URLパラメータ操作ユーティリティ */
-  queryUtil = new QueryUtil().get(',');
-
   /** 絞込み入力イベント */
   handleInputChange = (name : string) => (e : ChangeEvent<HTMLTextAreaElement>) => {
     this.setState({
@@ -59,51 +57,50 @@ class Works extends React.Component<Prop, State> {
   handleEnter = (filterKey : 'skillInput' | 'roleInput', filterValue : string | undefined) => (e : React.KeyboardEvent<HTMLDivElement>) => {
     if(e.keyCode === 13)
     {
-      this.addFilter(filterKey, filterValue);
+      //this.addFilter(filterKey, filterValue);
     }
   }
 
-  /** 絞込みに追加ボタンイベント */
-  handleAddFilter = (e : React.MouseEvent<HTMLElement, MouseEvent>) => {
-    this.addFilter('skillInput', this.state.skillInput);
-    this.addFilter('roleInput', this.state.roleInput);
-  }
-
-  /** 技術クリックイベント */
-  handleSkillClick = (value : string) => (e : React.MouseEvent<HTMLElement, MouseEvent>) => {
-    this.addFilter('skillInput', value);
-  };
-
-  /** 役割クリックイベント */
-  handleRoleClick = (value : string) => (e : React.MouseEvent<HTMLElement, MouseEvent>) => {
-    this.addFilter('roleInput', value);
-  };
-
-  /** 絞込みに追加 */
-  addFilter(filterKey : 'skillInput' | 'roleInput', filterValue : string | undefined) {
-
-    let filterArrayKey = (filterKey == 'skillInput')? 'skills' : 'roles';
-    let filterArray = (filterKey == 'skillInput')? this.state.skills : this.state.roles;
-    let filter = (filterArray != undefined)? filterArray : [];
-
-    if(filterValue && filterValue.trim())
-    {
-      filterValue = filterValue.trim().toUpperCase();
-      this.setState({
-        [filterArrayKey] : Array.from(new Set([...filter, ...[filterValue]])),
-        [filterKey] : ''
-      });
-    }
+  /** 絞込みに追加リンクのURLを生成 */
+  createAddFilterURL() {
+    let util = new QueryUtil();
+    util.get(',');
+    if(this.state.skillInput) util.add({ 'skills' : [this.state.skillInput] });
+    if(this.state.roleInput) util.add({ 'roles' : [this.state.roleInput] });
+    return `/works${util.toString(['skills', 'roles'])}`;
   }
 
   /** 追加リンクのURLを生成 */
   createAddUrl(filterKey : 'skills' | 'roles', value : string) : string {
-    return `/works${this.queryUtil.add({ filterKey : value}).toString(['skills', 'filters'])}`;
+    return `/works${new QueryUtil().get(',').add({ [filterKey] : [value] }).toString(['skills', 'roles'])}`;
   }
 
   /** 削除リンクのURLを生成 */
   createRemoveURL(filterKey : 'skills' | 'roles', value : string) : string {
-    return `/works${this.queryUtil.remove(filterKey, value).toString(['skills', 'filters'])}`;
+    return `/works${new QueryUtil().get(',').remove(filterKey, value).toString(['skills', 'roles'])}`;
+  }
+
+  /** フィルタ要素を生成 */
+  createFilterElements(filterKey : 'skills' | 'roles') : JSX.Element {
+    let params = new QueryUtil().get(',').params;
+    return (
+      <React.Fragment>
+        {(!params[filterKey])? null : params[filterKey].map((value : string) => {
+          return (
+            <Link to={this.createRemoveURL(filterKey, value)} className={this.props.classes.filterLink} key={`link-${filterKey}Filter-${value}`}>
+              <Button
+                variant="contained" 
+                color="default" 
+                className={this.props.classes.filterButton}
+                key={`${filterKey}Filter-${value}`}>
+                {value}
+                <DeleteIcon className={this.props.classes.filterIcon} />
+              </Button>
+            </Link>
+          )
+        })}
+      </React.Fragment>
+    );
   }
 
   /** 開発実績を取得 */
@@ -114,9 +111,9 @@ class Works extends React.Component<Prop, State> {
 
     // フィルタ
     let q = new QueryUtil();
-    let params = q.get().params;
-    let skills : string[] = (params && params.skills)? params.skills.split(',') : [];
-    let roles : string[] = (params && params.rolles)? params.rolles.split(',') : [];
+    let params = q.get(',').params;
+    let skills : string[] = (params && params.skills)? params && params.skills : [];
+    let roles : string[] = (params && params.roles)? params && params.roles : [];
 
     if(skills && skills.length > 0)
     {
@@ -153,36 +150,6 @@ class Works extends React.Component<Prop, State> {
     return datas;
   }
 
-  /** 現在のURLパラメータに指定の値を追加したものを返却 */
-  createParams(skill? : string , role? : string) {
-    let q = new QueryUtil();
-    let ret : string  = '';
-    let temp : string[] = [];
-    let params = q.get().params;
-
-    if(params)
-    {
-      if(params.skills && skill && skill.length > 0)
-      {
-        let skills = Array.from(new Set([...params.skills, ...[skill]]));
-        temp.push(`skills=${skills.join(',')}`);
-      }
-
-      if(params.roles && role && role.length > 0)
-      {
-        let roles = Array.from(new Set([...params.roles, ...[role]]));
-        temp.push(`roles=${roles.join(',')}`);
-      }
-    }
-
-    if(temp.length > 0)
-    {
-      ret = `?${temp.join('&')}`;
-    }
-
-    return ret;
-  }
-
   /** レンダリング */
   render() {
 
@@ -210,41 +177,15 @@ class Works extends React.Component<Prop, State> {
               onChange = {this.handleInputChange('roleInput')}
               onKeyDown = {this.handleEnter('roleInput', this.state.roleInput)}
             />
-            <a href={`/works${this.createParams(this.state.skillInput, this.state.roleInput)}`}>
-              <Button variant='contained' color='primary' className={this.props.classes.addFilterButton}>
+            <Link to={this.createAddFilterURL()} className={this.props.classes.addFilterLink}>
+              <Button variant='contained' color='primary' className={this.props.classes.addFilterButton} disabled={(!this.state.skillInput && !this.state.roleInput)}>
                 絞込みに追加
               </Button>
-            </a>
+            </Link>
           </div>
           <div className={this.props.classes.filters}>
-            {(this.state.skills == undefined)? null : this.state.skills.map((skill) => {
-              return (
-                <a href={this.createRemoveURL('skills', skill)}>
-                  <Button
-                    variant="contained" 
-                    color="default" 
-                    className={this.props.classes.filterButton}
-                    key={`skillFilter-${skill}`}  >
-                    {skill}
-                    <DeleteIcon className={this.props.classes.filterIcon} />
-                  </Button>
-                </a>
-              )
-            })}
-            {(this.state.roles == undefined)? null : this.state.roles.map((role) => {
-              return (
-                <a href={this.createRemoveURL('roles', role)}>
-                  <Button
-                    variant="contained" 
-                    color="default" 
-                    className={this.props.classes.filterButton}
-                    key={`roleFilter-${role}`} >
-                    {role}
-                    <DeleteIcon className={this.props.classes.filterIcon} />
-                  </Button>
-                </a>
-              )
-            })}
+            {this.createFilterElements('skills')}
+            {this.createFilterElements('roles')}
           </div>
           <div className={this.props.classes.contents}>
             {
@@ -253,10 +194,9 @@ class Works extends React.Component<Prop, State> {
                 works.map((work) => {
                   return (
                     <WorkCard 
-                      workInfo={work} 
-                      skillClickHandler={this.handleSkillClick} 
-                      roleClickHandler={this.handleRoleClick}
-                      key={`workCard-${work.Name}`} />)
+                      workInfo={work}
+                      key={`workCard-${work.Name}`}
+                      navigationHandler={this.props.navigationHandler} />)
                 })
             }
           </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 import styles from './drawerLayoutStyles';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import AppBar from '@material-ui/core/AppBar';
@@ -120,8 +120,6 @@ class DrawerLayout extends React.Component<Prop, State> {
   /** Drawerコントロールを生成 */
   createDrawer() : JSX.Element
   {
-    this.changeNavigationSelection();
-
     return (
       <div>
         <div className={this.props.classes.toolbar} />
@@ -147,24 +145,6 @@ class DrawerLayout extends React.Component<Prop, State> {
         </Card>
       </div>
     );
-  }
-
-  /** ナビゲーションの選択状態を切替 */
-  changeNavigationSelection()
-  {
-    // 選択状態を切り替える
-    this.state.links.forEach((links) => {
-      links.forEach((l) => {
-        if(l.url === location.pathname)
-        {
-          l.isSelected = true;
-        }
-        else
-        {
-          l.isSelected = false;
-        }
-      });
-    });
   }
 
   /** レンダリング */

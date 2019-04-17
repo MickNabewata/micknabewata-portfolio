@@ -172,3 +172,23 @@ it('toString - 配列 - 複数 - delimiterなし', () => {
     let result = q.toString(['test', 'test2']);
     expect(result).toEqual('?test=aaa,bbb&test2=ccc');
 });
+
+it('add - toString - getせず実行', () => {
+    let q = new QueryUtil();
+    let result = q.add({ test : ['aaa'] }).toString(['test']);
+    expect(result).toEqual('?test=aaa');
+});
+
+it('add - toString - getしてから実行', () => {
+    let q = new QueryUtil();
+    q.params = { test : ['aaa'], test2 : ['bbb', 'ccc'] };
+    let result = q.add({ test : ['ddd'] }).toString(['test', 'test2']);
+    expect(result).toEqual('?test=aaa,ddd&test2=bbb,ccc');
+});
+
+it('add - toString - paramsがundefined', () => {
+    let q = new QueryUtil();
+    q.params = undefined;
+    let result = q.add({ test : ['aaa'] }).toString(['test']);
+    expect(result).toEqual('?test=aaa');
+});

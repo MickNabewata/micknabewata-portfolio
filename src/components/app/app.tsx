@@ -18,6 +18,7 @@ interface Prop extends WithStyles<typeof styles> {
 
 /** ステート型定義 */
 type State = {
+  /** ナビゲーション */
   links : NavLinks[]
 };
 
@@ -35,6 +36,29 @@ class App extends React.Component<Prop, State> {
     };
   }
 
+  /** ナビゲーションの選択状態を切替 */
+  changeNavigationSelection(url : string)
+  {
+    // 選択状態を切り替える
+    this.state.links.forEach((links) => {
+      links.forEach((l) => {
+        if(l.url === url)
+        {
+          l.isSelected = true;
+        }
+        else
+        {
+          l.isSelected = false;
+        }
+      });
+    });
+  }
+
+  /** ナビゲーション発生前のイベント */
+  handleNavigate = (url : string) => () => {
+    this.changeNavigationSelection(url);
+  };
+
   /** 固定のナビゲーション */
   staticLinks : NavLinks[] = [
     [
@@ -42,6 +66,7 @@ class App extends React.Component<Prop, State> {
         text : '自己紹介',
         url : '/',
         icon : <AccountBox />,
+        click : this.handleNavigate('/'),
         closeMenuAfterClick : true,
         isSelected : false
       },
@@ -49,12 +74,14 @@ class App extends React.Component<Prop, State> {
         text : '技術',
         url : '/skills',
         icon : <Stars />,
+        click : this.handleNavigate('/skills'),
         closeMenuAfterClick : true
       },
       {
         text : '開発実績',
         url : '/works',
         icon : <Work />,
+        click : this.handleNavigate('/works'),
         closeMenuAfterClick : true
       },
       {
@@ -68,6 +95,10 @@ class App extends React.Component<Prop, State> {
 
   /** レンダリング */
   render() {
+
+    // ナビゲーションの選択状態を切替
+    this.changeNavigationSelection(location.pathname);
+
     return (
       <BrowserRouter>
         <DrawerLayout links={ this.state.links }>
