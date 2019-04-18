@@ -47,7 +47,7 @@ class WorkCard extends React.Component<Prop, State> {
 
   /** 追加リンクのURLを生成 */
   createAddUrl(filterKey : 'skills' | 'roles', value : string) : string {
-    return `/works${new QueryUtil().get(',').add({ [filterKey] : [value] }).toString(['skills', 'roles'])}`;
+    return `/works${new QueryUtil().get(',').add({ [filterKey] : [encodeURIComponent(value)] }).toString(['skills', 'roles'])}`;
   }
 
   /** ダイアログオープン */

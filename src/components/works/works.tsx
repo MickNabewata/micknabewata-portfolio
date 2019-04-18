@@ -59,14 +59,14 @@ class Works extends React.Component<Prop, State> {
   createAddFilterURL() {
     let util = new QueryUtil();
     util.get(',');
-    if(this.state.skillInput) util.add({ 'skills' : [this.state.skillInput] });
-    if(this.state.roleInput) util.add({ 'roles' : [this.state.roleInput] });
+    if(this.state.skillInput) util.add({ 'skills' : [encodeURIComponent(this.state.skillInput)] });
+    if(this.state.roleInput) util.add({ 'roles' : [encodeURIComponent(this.state.roleInput)] });
     return `/works${util.toString(['skills', 'roles'])}`;
   }
 
   /** 追加リンクのURLを生成 */
   createAddUrl(filterKey : 'skills' | 'roles', value : string) : string {
-    return `/works${new QueryUtil().get(',').add({ [filterKey] : [value] }).toString(['skills', 'roles'])}`;
+    return `/works${new QueryUtil().get(',').add({ [filterKey] : [encodeURIComponent(value)] }).toString(['skills', 'roles'])}`;
   }
 
   /** 削除リンクのURLを生成 */
@@ -90,7 +90,7 @@ class Works extends React.Component<Prop, State> {
                   color="default" 
                   className={this.props.classes.filterButton}
                   key={`${filterKey}Filter-${value}`}>
-                  {value}
+                  {decodeURIComponent(value)}
                   <DeleteIcon className={this.props.classes.filterIcon} />
                 </Button>
               </Link>
@@ -127,7 +127,7 @@ class Works extends React.Component<Prop, State> {
         let ret : boolean = true;
         for (let i = 0; i < skills.length; i++)
         {
-          if(v.Skill.indexOf(skills[i]) == -1)
+          if(v.Skill.indexOf(decodeURIComponent(skills[i])) == -1)
           {
             ret = false;
             break;
@@ -143,7 +143,7 @@ class Works extends React.Component<Prop, State> {
         let ret : boolean = true;
         for (let i = 0; i < roles.length; i++)
         {
-          if(v.Role.indexOf(roles[i]) == -1)
+          if(v.Role.indexOf(decodeURIComponent(roles[i])) == -1)
           {
             ret = false;
             break;

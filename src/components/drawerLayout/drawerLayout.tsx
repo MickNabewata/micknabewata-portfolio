@@ -29,9 +29,7 @@ export type NavLink = {
   /** クリックイベント */
   click? : ((event : React.MouseEvent<HTMLElement, MouseEvent>) => void) | undefined,
   /** クリック後にナビゲーションを閉じるか否か */
-  closeMenuAfterClick? : boolean | false,
-  /** 現在選択中か否か */
-  isSelected? : boolean | false
+  closeMenuAfterClick? : boolean | false
 };
 
 /** ナビゲーションリンク配列 */
@@ -40,7 +38,9 @@ export type NavLinks = NavLink[];
 /** プロパティ型定義 */
 interface Prop extends WithStyles<typeof styles> {
   /** ナビゲーションリンク(1要素ずつDividerで区切られる) */
-  links : NavLinks[]
+  links : NavLinks[],
+  /** 現在表示中ページのパス */
+  path : string
 }
 
 /** ステート型定義 */
@@ -97,7 +97,7 @@ class DrawerLayout extends React.Component<Prop, State> {
                 button 
                 key={`navItem-${link.text}`} 
                 onClick={ this.handleClick(link) } 
-                className={this.props.classes.linkItem + ' ' + ((link.isSelected)? this.props.classes.selected : '') } >
+                className={this.props.classes.linkItem + ' ' + ((link.url == this.props.path)? this.props.classes.selected : '') } >
                 {(link.icon !== undefined)? <ListItemIcon>{link.icon}</ListItemIcon> : <React.Fragment />}
                 <ListItemText primary={link.text} disableTypography={true} className={this.props.classes.linkText} />
               </ListItem>

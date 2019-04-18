@@ -18,8 +18,8 @@ interface Prop extends WithStyles<typeof styles> {
 
 /** ステート型定義 */
 type State = {
-  /** ナビゲーション */
-  links : NavLinks[]
+  /** 現在表示中ページのパス */
+  currentPath : string
 };
 
 /** コンポーネント定義 */
@@ -32,37 +32,26 @@ class App extends React.Component<Prop, State> {
 
     // ステート初期化
     this.state = {
-      links : this.staticLinks
+      currentPath : '/'
     };
   }
 
   /** ナビゲーション発生前のイベント */
   handleNavigate(url : string) {
-    // 選択状態を切り替える
-    this.state.links.forEach((links) => {
-      links.forEach((l) => {
-        if(l.url === url)
-        {
-          l.isSelected = true;
-        }
-        else
-        {
-          l.isSelected = false;
-        }
-      });
-    });
+    this.setState({ currentPath : url });
+    window.scrollTo(0, 0);
   };
 
   /** 固定のナビゲーション */
-  staticLinks : NavLinks[] = [
+  staticLinks : NavLinks[] = 
+  [
     [
       {
         text : '自己紹介',
         url : '/',
         icon : <AccountBox />,
         click : () => { this.handleNavigate('/'); },
-        closeMenuAfterClick : true,
-        isSelected : false
+        closeMenuAfterClick : true
       },
       {
         text : '技術',
@@ -89,13 +78,9 @@ class App extends React.Component<Prop, State> {
 
   /** レンダリング */
   render() {
-
-    // ナビゲーションの選択状態を切替
-    this.handleNavigate(location.pathname);
-
     return (
       <BrowserRouter>
-        <DrawerLayout links={ this.state.links }>
+        <DrawerLayout links={ this.staticLinks } path={this.state.currentPath}>
           <Route exact path='/' component={() => { return <Hello />; }} />
           <Route exact path='/skills' component={() => { return <Skills navigationHandler={(url : string) => { this.handleNavigate(url); }} />; }} />
           <Route exact path='/works' component={() => { return <Works />; }} />

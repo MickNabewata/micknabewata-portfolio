@@ -24,7 +24,7 @@ export default class QueryUtil {
             //urlパラメータをオブジェクトにまとめる
             urlParamStr.split('&').forEach( param => {
                 let temp = param.split('=');
-                temp[1] = decodeURIComponent(temp[1]).toUpperCase();
+                temp[1] = temp[1].toUpperCase();
 
                 //pramsオブジェクトにパラメータを追加
                 this.params = {
