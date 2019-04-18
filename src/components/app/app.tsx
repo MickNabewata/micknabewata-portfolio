@@ -36,9 +36,8 @@ class App extends React.Component<Prop, State> {
     };
   }
 
-  /** ナビゲーションの選択状態を切替 */
-  changeNavigationSelection(url : string)
-  {
+  /** ナビゲーション発生前のイベント */
+  handleNavigate(url : string) {
     // 選択状態を切り替える
     this.state.links.forEach((links) => {
       links.forEach((l) => {
@@ -52,11 +51,6 @@ class App extends React.Component<Prop, State> {
         }
       });
     });
-  }
-
-  /** ナビゲーション発生前のイベント */
-  handleNavigate = (url : string) => () => {
-    this.changeNavigationSelection(url);
   };
 
   /** 固定のナビゲーション */
@@ -66,7 +60,7 @@ class App extends React.Component<Prop, State> {
         text : '自己紹介',
         url : '/',
         icon : <AccountBox />,
-        click : this.handleNavigate('/'),
+        click : () => { this.handleNavigate('/'); },
         closeMenuAfterClick : true,
         isSelected : false
       },
@@ -74,14 +68,14 @@ class App extends React.Component<Prop, State> {
         text : '技術',
         url : '/skills',
         icon : <Stars />,
-        click : this.handleNavigate('/skills'),
+        click : () => { this.handleNavigate('/skills'); },
         closeMenuAfterClick : true
       },
       {
         text : '開発実績',
         url : '/works',
         icon : <Work />,
-        click : this.handleNavigate('/works'),
+        click : () => { this.handleNavigate('/works'); },
         closeMenuAfterClick : true
       },
       {
@@ -97,13 +91,13 @@ class App extends React.Component<Prop, State> {
   render() {
 
     // ナビゲーションの選択状態を切替
-    this.changeNavigationSelection(location.pathname);
+    this.handleNavigate(location.pathname);
 
     return (
       <BrowserRouter>
         <DrawerLayout links={ this.state.links }>
           <Route exact path='/' component={() => { return <Hello />; }} />
-          <Route exact path='/skills' component={() => { return <Skills />; }} />
+          <Route exact path='/skills' component={() => { return <Skills navigationHandler={(url : string) => { this.handleNavigate(url); }} />; }} />
           <Route exact path='/works' component={() => { return <Works />; }} />
         </DrawerLayout>
       </BrowserRouter>

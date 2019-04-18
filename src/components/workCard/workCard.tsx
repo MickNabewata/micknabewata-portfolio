@@ -19,7 +19,7 @@ interface Prop extends WithStyles<typeof styles> {
   /** 開発実績 */
   workInfo : Work,
   /** ナビゲーション発生時のコールバック */
-  navigationHandler? : (url : string) => {}
+  navigationHandler? : (url : string) => void
 }
 
 /** ステート型定義 */
@@ -89,11 +89,12 @@ class WorkCard extends React.Component<Prop, State> {
               <Typography component="p">
                 {this.props.workInfo.Skill.slice(0, 3).map((skill) => {
                   return (
-                    <Link to={this.createAddUrl('skills', skill)} key={`link-${this.props.workInfo.Name}-${skill}`} onClick={this.handleNavigate('works')}>
+                    <Link to={this.createAddUrl('skills', skill)} key={`link-${this.props.workInfo.Name}-${skill}`}>
                       <Button
                         color='primary'
                         className={this.props.classes.filterButton}
-                        key={`${this.props.workInfo.Name}-${skill}`} >
+                        key={`${this.props.workInfo.Name}-${skill}`}
+                        onClick={this.handleNavigate('works')} >
                         {skill}
                       </Button>
                     </Link>
@@ -113,11 +114,12 @@ class WorkCard extends React.Component<Prop, State> {
               <Typography component="p">
                 {this.props.workInfo.Role.slice(0, 3).map((role) => {
                   return (
-                    <Link to={this.createAddUrl('roles', role)} key={`link-${this.props.workInfo.Name}-${role}`} onClick={this.handleNavigate('works')}>
+                    <Link to={this.createAddUrl('roles', role)} key={`link-${this.props.workInfo.Name}-${role}`}>
                       <Button
                         color='primary'
                         className={this.props.classes.filterButton}
-                        key={`${this.props.workInfo.Name}-${role}`} >
+                        key={`${this.props.workInfo.Name}-${role}`}
+                        onClick={this.handleNavigate('works')}>
                         {role}
                       </Button>
                     </Link>

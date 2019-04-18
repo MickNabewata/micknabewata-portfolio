@@ -7,7 +7,7 @@ import { SkillCategory, skills } from '../../datas/skills';
 /** プロパティ型定義 */
 interface Prop extends WithStyles<typeof styles> {
   /** ナビゲーション発生時のコールバック */
-  navigationHandler? : (url : string) => {}
+  navigationHandler? : (url : string) => void
 }
 
 /** ステート型定義 */

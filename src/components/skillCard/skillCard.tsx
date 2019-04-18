@@ -15,7 +15,7 @@ interface Prop extends WithStyles<typeof styles> {
   /** 技術情報 */
   skillInfo : SkillCategory,
   /** ナビゲーション発生時のコールバック */
-  navigationHandler? : (url : string) => {}
+  navigationHandler? : (url : string) => void
 }
 
 /** ステート型定義 */
@@ -70,11 +70,12 @@ class SkillCard extends React.Component<Prop, State> {
                 <span className={this.props.classes.skillName}>
                   {
                     (skill.HasWork)?
-                    <Link to={`/works?skills=${encodeURIComponent(skill.Name)}`} key={`skill_link-${skill.Name}`} onClick={this.handleNavigate('works')}>
+                    <Link to={`/works?skills=${encodeURIComponent(skill.Name)}`} key={`skill_link-${skill.Name}`}>
                       <Button 
                         color='primary' 
                         key={`link-${skill.Name}`} 
-                        className={this.props.classes.skillLink}>
+                        className={this.props.classes.skillLink}
+                        onClick={this.handleNavigate('/works')}>
                           {skill.Name}
                       </Button>
                     </Link> :

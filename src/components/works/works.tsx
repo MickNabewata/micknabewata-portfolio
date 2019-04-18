@@ -14,19 +14,15 @@ interface Prop extends WithStyles<typeof styles> {
   /** 技術名フィルタ */
   skillFilters? : string[],
   /** ナビゲーション発生時のコールバック */
-  navigationHandler? : (url : string) => {}
+  navigationHandler? : (url : string) => void
 }
 
 /** ステート型定義 */
 type State = {
   /** 技術の入力値 */
   skillInput? : string,
-  /** 技術の絞込み */
-  skills? : string[],
   /** 役割の入力値 */
-  roleInput? : string,
-  /** 役割の絞込み */
-  roles? : string[]
+  roleInput? : string
 };
 
 /** コンポーネント定義 */
@@ -40,9 +36,7 @@ class Works extends React.Component<Prop, State> {
     // ステート初期化
     this.state = {
       skillInput : '',
-      skills : this.props.skillFilters,
-      roleInput : '',
-      roles : []
+      roleInput : ''
     };
   }
 
@@ -83,24 +77,36 @@ class Works extends React.Component<Prop, State> {
   /** フィルタ要素を生成 */
   createFilterElements(filterKey : 'skills' | 'roles') : JSX.Element {
     let params = new QueryUtil().get(',').params;
+    let values : string[] = (params[filterKey])? Array.from(new Set(params[filterKey])) : [];
+
     return (
       <React.Fragment>
-        {(!params[filterKey])? null : params[filterKey].map((value : string) => {
-          return (
-            <Link to={this.createRemoveURL(filterKey, value)} className={this.props.classes.filterLink} key={`link-${filterKey}Filter-${value}`}>
-              <Button
-                variant="contained" 
-                color="default" 
-                className={this.props.classes.filterButton}
-                key={`${filterKey}Filter-${value}`}>
-                {value}
-                <DeleteIcon className={this.props.classes.filterIcon} />
-              </Button>
-            </Link>
-          )
-        })}
+        {
+          values.map((value : string) => {
+            return (
+              <Link to={this.createRemoveURL(filterKey, value)} className={this.props.classes.filterLink} key={`link-${filterKey}Filter-${value}`}>
+                <Button
+                  variant="contained" 
+                  color="default" 
+                  className={this.props.classes.filterButton}
+                  key={`${filterKey}Filter-${value}`}>
+                  {value}
+                  <DeleteIcon className={this.props.classes.filterIcon} />
+                </Button>
+              </Link>
+            )
+          })
+        }
       </React.Fragment>
     );
+  }
+
+  /** 絞込みに追加ボタンクリックイベント */
+  addFilterClickHander = (e : React.MouseEvent<HTMLElement>) => {
+    this.setState({
+      skillInput : '',
+      roleInput : ''
+    });
   }
 
   /** 開発実績を取得 */
@@ -178,7 +184,7 @@ class Works extends React.Component<Prop, State> {
               onKeyDown = {this.handleEnter('roleInput', this.state.roleInput)}
             />
             <Link to={this.createAddFilterURL()} className={this.props.classes.addFilterLink}>
-              <Button variant='contained' color='primary' className={this.props.classes.addFilterButton} disabled={(!this.state.skillInput && !this.state.roleInput)}>
+              <Button variant='contained' color='primary' className={this.props.classes.addFilterButton} onClick={this.addFilterClickHander} disabled={(!this.state.skillInput && !this.state.roleInput)}>
                 絞込みに追加
               </Button>
             </Link>
