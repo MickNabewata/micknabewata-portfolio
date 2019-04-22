@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styles from './workCardStyles';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import Card from '@material-ui/core/Card';
@@ -11,12 +12,14 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { Work } from '../../datas/works';
+import QueryUtil from '../../utils/queryUtil';
 
 /** プロパティ型定義 */
 interface Prop extends WithStyles<typeof styles> {
+  /** 開発実績 */
   workInfo : Work,
-  skillClickHandler : (value : string) => (e : React.MouseEvent<HTMLElement, MouseEvent>) => void,
-  roleClickHandler : (value : string) => (e : React.MouseEvent<HTMLElement, MouseEvent>) => void
+  /** ナビゲーション発生時のコールバック */
+  navigationHandler? : (url : string) => void
 }
 
 /** ステート型定義 */
@@ -42,6 +45,11 @@ class WorkCard extends React.Component<Prop, State> {
     };
   }
 
+  /** 追加リンクのURLを生成 */
+  createAddUrl(filterKey : 'skills' | 'roles', value : string) : string {
+    return `/works${new QueryUtil().get(',').add({ [filterKey] : [encodeURIComponent(value)] }).toString(['skills', 'roles'])}`;
+  }
+
   /** ダイアログオープン */
   handleDialogOpen = (skills : string[]) => () => {
     this.setState({ dialogSkills : skills, dialogOpen: true });
@@ -50,6 +58,14 @@ class WorkCard extends React.Component<Prop, State> {
   /** ダイアログクローズ */
   handleDialogClose = () => {
     this.setState({ dialogSkills : [], dialogOpen: false });
+  };
+
+  /** ナビゲーション発生前のイベント */
+  handleNavigate = (url : string) => () => {
+    if(this.props.navigationHandler)
+    {
+      this.props.navigationHandler(url);
+    }
   };
 
   /** レンダリング */
@@ -73,13 +89,15 @@ class WorkCard extends React.Component<Prop, State> {
               <Typography component="p">
                 {this.props.workInfo.Skill.slice(0, 3).map((skill) => {
                   return (
-                    <Button
-                      color='primary'
-                      className={this.props.classes.filterButton}
-                      onClick={this.props.skillClickHandler(skill)}
-                      key={`${this.props.workInfo.Name}-${skill}`} >
-                      {skill}
-                    </Button>
+                    <Link to={this.createAddUrl('skills', skill)} key={`link-${this.props.workInfo.Name}-${skill}`}>
+                      <Button
+                        color='primary'
+                        className={this.props.classes.filterButton}
+                        key={`${this.props.workInfo.Name}-${skill}`}
+                        onClick={this.handleNavigate('works')} >
+                        {skill}
+                      </Button>
+                    </Link>
                   );
                 })}
                 {
@@ -96,13 +114,15 @@ class WorkCard extends React.Component<Prop, State> {
               <Typography component="p">
                 {this.props.workInfo.Role.slice(0, 3).map((role) => {
                   return (
-                    <Button
-                      color='primary'
-                      className={this.props.classes.filterButton}
-                      onClick={this.props.roleClickHandler(role)}
-                      key={`${this.props.workInfo.Name}-${role}`} >
-                      {role}
-                    </Button>
+                    <Link to={this.createAddUrl('roles', role)} key={`link-${this.props.workInfo.Name}-${role}`}>
+                      <Button
+                        color='primary'
+                        className={this.props.classes.filterButton}
+                        key={`${this.props.workInfo.Name}-${role}`}
+                        onClick={this.handleNavigate('works')}>
+                        {role}
+                      </Button>
+                    </Link>
                   );
                 })}
               </Typography>
@@ -172,13 +192,14 @@ class WorkCard extends React.Component<Prop, State> {
           <DialogContentText className={this.props.classes.skillDialogContent}>
             {this.state.dialogSkills.map((skill) => {
               return (
-                <Button
-                  color='primary'
-                  className={this.props.classes.filterButton}
-                  onClick={this.props.skillClickHandler(skill)}
-                  key={`${this.props.workInfo.Name}-${skill}`} >
-                  {skill}
-                </Button>
+                <Link to={this.createAddUrl('skills', skill)} key={`link-${this.props.workInfo.Name}-${skill}`} onClick={this.handleNavigate('works')}>
+                  <Button
+                    color='primary'
+                    className={this.props.classes.filterButton}
+                    key={`${this.props.workInfo.Name}-${skill}`} >
+                    {skill}
+                  </Button>
+                </Link>
               );
             })}
           </DialogContentText>

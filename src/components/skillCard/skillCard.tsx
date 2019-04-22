@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styles from './skillCardStyles';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import Card from '@material-ui/core/Card';
@@ -12,7 +13,9 @@ import { SkillCategory, Skill } from '../../datas/skills';
 /** プロパティ型定義 */
 interface Prop extends WithStyles<typeof styles> {
   /** 技術情報 */
-  skillInfo : SkillCategory
+  skillInfo : SkillCategory,
+  /** ナビゲーション発生時のコールバック */
+  navigationHandler? : (url : string) => void
 }
 
 /** ステート型定義 */
@@ -31,6 +34,14 @@ class SkillCard extends React.Component<Prop, State> {
     this.state = {
     };
   }
+  
+  /** ナビゲーション発生前のイベント */
+  handleNavigate = (url : string) => () => {
+    if(this.props.navigationHandler)
+    {
+      this.props.navigationHandler(url);
+    }
+  };
 
   /** スターのレンダリング */
   renderStar(skill : Skill) {
@@ -59,14 +70,15 @@ class SkillCard extends React.Component<Prop, State> {
                 <span className={this.props.classes.skillName}>
                   {
                     (skill.HasWork)?
-                    <a href={`/works?skills=${encodeURIComponent(skill.Name)}`} key={`skill_link-${skill.Name}`} >
+                    <Link to={`/works?skills=${encodeURIComponent(skill.Name)}`} key={`skill_link-${skill.Name}`}>
                       <Button 
                         color='primary' 
                         key={`link-${skill.Name}`} 
-                        className={this.props.classes.skillLink}>
+                        className={this.props.classes.skillLink}
+                        onClick={this.handleNavigate('/works')}>
                           {skill.Name}
                       </Button>
-                    </a> :
+                    </Link> :
                     <span className={this.props.classes.skillText}>{skill.Name}</span>
                   }
                 </span>

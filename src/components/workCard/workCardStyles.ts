@@ -26,8 +26,7 @@ const styles = (theme : Theme) =>
       margin: 0,
       fontSize : '13px',
       minWidth : 'auto',
-      lineHeight : 'normal',
-      textDecoration : 'underline'
+      lineHeight : 'normal'
     },
     noMarginTop : {
       marginTop : '5px !important'
