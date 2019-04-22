@@ -62,6 +62,12 @@ class App extends React.Component<Prop, State> {
         url : 'https://www.micknabewata.com',
         icon : <Wallpaper />,
         closeMenuAfterClick : true
+      },
+      {
+        text : '鍋綿のSharePoint部屋',
+        url : 'https://sporoom.micknabewata.com',
+        icon : <Wallpaper />,
+        closeMenuAfterClick : true
       }
     ]
   ];
