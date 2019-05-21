@@ -27,6 +27,23 @@ export type Work = {
 /** 開発実績データ */
 export const works : Work[] = [
     {
+        Span : '2019年5月',
+        ImageUrl : '/SpoRoom.jpg',
+        Name : 'SharePoint関連便利ツール構築',
+        Skill : ['TYPESCRIPT', 'REACT', 'FIREBASE', 'JAVASCRIPT', 'HTML/CSS', 'WEBフロントエンド', 'NODE.JS'],
+        Role : ['メンバー'],
+        Members : 1,
+        URL : 'https://sporoom.micknabewata.com/',
+        URLDisp : '鍋綿のSharePoint部屋',
+        GitHub : 'https://github.com/MickNabewata/micknabewata-spo',
+        GitHubDisp : 'micknabewata-spo',
+        Overview : [
+            'SharePoint関連の便利ツールを公開する',
+            'Webサイトを構築しました。',
+            '今後も機能追加をしていきます。'
+        ]
+    },
+    {
         Span : '2019年4月',
         ImageUrl : '/Portfolio.jpg',
         Name : 'ポートフォリオサイト構築',
