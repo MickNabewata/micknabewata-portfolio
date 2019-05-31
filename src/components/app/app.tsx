@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import styles from './appStyles';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import AccountBox from '@material-ui/icons/AccountBox';
@@ -88,9 +88,12 @@ class App extends React.Component<Prop, State> {
     return (
       <BrowserRouter>
         <DrawerLayout links={ this.staticLinks } path={this.state.currentPath}>
-          <Route exact path='/' component={() => { return <Hello pageInfo={pages.home} />; }} />
-          <Route exact path='/skills' component={() => { return <Skills pageInfo={pages.skills} navigationHandler={(url : string) => { this.handleNavigate(url); }} />; }} />
-          <Route exact path='/works' component={() => { return <Works pageInfo={pages.works} />; }} />
+          <Switch>
+            <Route exact path='/' component={() => { return <Hello pageInfo={pages.home} />; }} />
+            <Route exact path='/skills' component={() => { return <Skills pageInfo={pages.skills} navigationHandler={(url : string) => { this.handleNavigate(url); }} />; }} />
+            <Route exact path='/works' component={() => { return <Works pageInfo={pages.works} />; }} />
+            <Route component={() => { return <h1>ページが見つかりません。m(_ _)m</h1> }} />
+          </Switch>
         </DrawerLayout>
       </BrowserRouter>
     );

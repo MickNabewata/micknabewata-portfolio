@@ -68,7 +68,7 @@ class Hello extends React.Component<Prop, State> {
     return (
         <React.Fragment>
           <Helmet
-            pageTitle={ this.props.pageInfo.name }
+            pageTitle=''
             pageDescription={ this.props.pageInfo.description }
             pageKeywords={ this.props.pageInfo.keyWords }
             pageThumbnail={ this.props.pageInfo.thumbNail }

@@ -39,27 +39,18 @@ export default class MyHelmet extends React.Component<Prop, State> {
   /** レンダリング */
   render() {
     let props = { ...this.props };
+    props.pageTitle = (props.pageTitle && props.pageTitle.length > 0)? `${props.pageTitle} - 鍋綿ポートフォリオ` : '鍋綿ポートフォリオ';
     props.pagePath = `${window.location.protocol}//${window.location.host}${props.pagePath}`;
     props.pageThumbnail = `${window.location.protocol}//${window.location.host}${props.pageThumbnail}`;
 
     return (
       <Helmet
+        title={props.pageTitle}
         meta={
           [
             { name : 'description', content : props.pageDescription }, 
             { name : 'keywords', content : (props.pageKeywords)? props.pageKeywords.join(',') : '' },
-            { property : 'og:site_name', content : '鍋綿ポートフォリオ' },
-            { property : 'og:title', content : props.pageTitle },
-            { property : 'og:description', content : props.pageDescription },
-            { property : 'og:type', content : 'website' },
-            { property : 'og:image', content : props.pageThumbnail },
-            /* Twitter属性を動的に追加しても認識してくれなかったので削除
-            { name : 'twitter:card', content : 'summary' },
-            { name : 'twitter:site', content : '@MNabewata' },
-            { name : 'twitter:title', content : props.pageTitle },
-            { name : 'twitter:text', content : props.pageDescription },
-            { name : 'twitter:description', content : props.pageDescription },
-            { name : 'twitter:image', content : props.pageThumbnail }*/
+            { name : 'thumbnail', content : props.pageThumbnail }
           ]
         }
         link={

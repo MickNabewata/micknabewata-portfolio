@@ -20,7 +20,7 @@ const pages = {
         name : '自己紹介',
         description : 'Office 365を得意とするITエンジニア@MNabewataのポートフォリオサイトです。',
         keyWords : ['ポートフォリオ', 'Office 365', 'SharePoint', 'シェアポイント', 'C#', 'React'],
-        thumbNail : '/thumbnails/home.png'
+        thumbNail : '/thumbnails/hello.png'
     } as page,
 
     /** 技術 */
