@@ -3,9 +3,13 @@ import styles from './helloStyles';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import Typography from '@material-ui/core/Typography';
 import { hello } from '../../datas/hello';
+import { page } from '../../datas/pages';
+import Helmet from '../helmet/helmet';
 
 /** プロパティ型定義 */
 interface Prop extends WithStyles<typeof styles> {
+  /** ページ情報 */
+  pageInfo : page
 }
 
 /** ステート型定義 */
@@ -63,6 +67,13 @@ class Hello extends React.Component<Prop, State> {
   render() {
     return (
         <React.Fragment>
+          <Helmet
+            pageTitle={ this.props.pageInfo.name }
+            pageDescription={ this.props.pageInfo.description }
+            pageKeywords={ this.props.pageInfo.keyWords }
+            pageThumbnail={ this.props.pageInfo.thumbNail }
+            pagePath={ this.props.pageInfo.path }
+          />
           { this.createTitle() }
           <br />
           { this.createHello() }

@@ -11,6 +11,7 @@ import DrawerLayout, { NavLinks } from '../drawerLayout/drawerLayout';
 import Hello from '../hello/hello';
 import Skills from '../skills/skills';
 import Works from '../works/works';
+import pages from '../../datas/pages';
 
 /** プロパティ型定義 */
 interface Prop extends WithStyles<typeof styles> {
@@ -47,24 +48,24 @@ class App extends React.Component<Prop, State> {
   [
     [
       {
-        text : '自己紹介',
-        url : '/',
+        text : pages.home.name,
+        url : pages.home.path,
         icon : <AccountBox />,
-        click : () => { this.handleNavigate('/'); },
+        click : () => { this.handleNavigate(pages.home.path); },
         closeMenuAfterClick : true
       },
       {
-        text : '技術',
-        url : '/skills',
+        text : pages.skills.name,
+        url : pages.skills.path,
         icon : <Stars />,
-        click : () => { this.handleNavigate('/skills'); },
+        click : () => { this.handleNavigate(pages.skills.path); },
         closeMenuAfterClick : true
       },
       {
-        text : '開発実績',
-        url : '/works',
+        text : pages.works.name,
+        url : pages.works.path,
         icon : <Work />,
-        click : () => { this.handleNavigate('/works'); },
+        click : () => { this.handleNavigate(pages.works.path); },
         closeMenuAfterClick : true
       },
       {
@@ -87,9 +88,9 @@ class App extends React.Component<Prop, State> {
     return (
       <BrowserRouter>
         <DrawerLayout links={ this.staticLinks } path={this.state.currentPath}>
-          <Route exact path='/' component={() => { return <Hello />; }} />
-          <Route exact path='/skills' component={() => { return <Skills navigationHandler={(url : string) => { this.handleNavigate(url); }} />; }} />
-          <Route exact path='/works' component={() => { return <Works />; }} />
+          <Route exact path='/' component={() => { return <Hello pageInfo={pages.home} />; }} />
+          <Route exact path='/skills' component={() => { return <Skills pageInfo={pages.skills} navigationHandler={(url : string) => { this.handleNavigate(url); }} />; }} />
+          <Route exact path='/works' component={() => { return <Works pageInfo={pages.works} />; }} />
         </DrawerLayout>
       </BrowserRouter>
     );

@@ -8,9 +8,13 @@ import { Button } from '@material-ui/core';
 import WorkCard from '../workCard/workCard';
 import { Work, works } from '../../datas/works';
 import QueryUtil from '../../utils/queryUtil';
+import { page } from '../../datas/pages';
+import Helmet from '../helmet/helmet';
 
 /** プロパティ型定義 */
 interface Prop extends WithStyles<typeof styles> {
+  /** ページ情報 */
+  pageInfo : page
   /** 技術名フィルタ */
   skillFilters? : string[],
   /** ナビゲーション発生時のコールバック */
@@ -57,27 +61,64 @@ class Works extends React.Component<Prop, State> {
 
   /** 絞込みに追加リンクのURLを生成 */
   createAddFilterURL() {
-    let util = new QueryUtil();
-    util.get(',');
-    if(this.state.skillInput) util.add({ 'skills' : [encodeURIComponent(this.state.skillInput)] });
-    if(this.state.roleInput) util.add({ 'roles' : [encodeURIComponent(this.state.roleInput)] });
-    return `/works${util.toString(['skills', 'roles'])}`;
+    let ret = '';
+    
+    try
+    {
+      let util = new QueryUtil();
+      util.get(',');
+      if(this.state.skillInput) util.add({ 'skills' : [encodeURIComponent(this.state.skillInput)] });
+      if(this.state.roleInput) util.add({ 'roles' : [encodeURIComponent(this.state.roleInput)] });
+      ret = `/works${util.toString(['skills', 'roles'])}`;
+    }
+    catch
+    {
+
+    }
+
+    return ret;
   }
 
   /** 追加リンクのURLを生成 */
   createAddUrl(filterKey : 'skills' | 'roles', value : string) : string {
-    return `/works${new QueryUtil().get(',').add({ [filterKey] : [encodeURIComponent(value)] }).toString(['skills', 'roles'])}`;
+    let ret = '';
+    try
+    {
+      ret = `/works${new QueryUtil().get(',').add({ [filterKey] : [encodeURIComponent(value)] }).toString(['skills', 'roles'])}`;
+    }
+    catch
+    {
+
+    }
+    return ret;
   }
 
   /** 削除リンクのURLを生成 */
   createRemoveURL(filterKey : 'skills' | 'roles', value : string) : string {
-    return `/works${new QueryUtil().get(',').remove(filterKey, value).toString(['skills', 'roles'])}`;
+    let ret = '';
+    try
+    {
+      ret = `/works${new QueryUtil().get(',').remove(filterKey, value).toString(['skills', 'roles'])}`
+    }
+    catch
+    {
+
+    }
+    return ret;
   }
 
   /** フィルタ要素を生成 */
   createFilterElements(filterKey : 'skills' | 'roles') : JSX.Element {
-    let params = new QueryUtil().get(',').params;
-    let values : string[] = (params[filterKey])? Array.from(new Set(params[filterKey])) : [];
+    let values : string[] = [];
+    try
+    {
+      let params = new QueryUtil().get(',').params;
+      values = (params[filterKey])? Array.from(new Set(params[filterKey])) : [];
+    }
+    catch
+    {
+
+    }
 
     return (
       <React.Fragment>
@@ -115,42 +156,49 @@ class Works extends React.Component<Prop, State> {
     // 返却するデータ
     let datas = works;
 
-    // フィルタ
-    let q = new QueryUtil();
-    let params = q.get(',').params;
-    let skills : string[] = (params && params.skills)? params && params.skills : [];
-    let roles : string[] = (params && params.roles)? params && params.roles : [];
-
-    if(skills && skills.length > 0)
+    try
     {
-      datas = datas.filter((v) => {
-        let ret : boolean = true;
-        for (let i = 0; i < skills.length; i++)
-        {
-          if(v.Skill.indexOf(decodeURIComponent(skills[i])) == -1)
+      // フィルタ
+      let q = new QueryUtil();
+      let params = q.get(',').params;
+      let skills : string[] = (params && params.skills)? params && params.skills : [];
+      let roles : string[] = (params && params.roles)? params && params.roles : [];
+
+      if(skills && skills.length > 0)
+      {
+        datas = datas.filter((v) => {
+          let ret : boolean = true;
+          for (let i = 0; i < skills.length; i++)
           {
-            ret = false;
-            break;
+            if(v.Skill.indexOf(decodeURIComponent(skills[i])) == -1)
+            {
+              ret = false;
+              break;
+            }
           }
-        }
-        return ret;
-      });
+          return ret;
+        });
+      }
+
+      if(roles && roles.length > 0)
+      {
+        datas = datas.filter((v) => {
+          let ret : boolean = true;
+          for (let i = 0; i < roles.length; i++)
+          {
+            if(v.Role.indexOf(decodeURIComponent(roles[i])) == -1)
+            {
+              ret = false;
+              break;
+            }
+          }
+          return ret;
+        });
+      }
     }
-
-    if(roles && roles.length > 0)
+    catch
     {
-      datas = datas.filter((v) => {
-        let ret : boolean = true;
-        for (let i = 0; i < roles.length; i++)
-        {
-          if(v.Role.indexOf(decodeURIComponent(roles[i])) == -1)
-          {
-            ret = false;
-            break;
-          }
-        }
-        return ret;
-      });
+
     }
 
     return datas;
@@ -165,6 +213,13 @@ class Works extends React.Component<Prop, State> {
     // 要素を作成
     return (
         <React.Fragment>
+          <Helmet
+            pageTitle={ this.props.pageInfo.name }
+            pageDescription={ this.props.pageInfo.description }
+            pageKeywords={ this.props.pageInfo.keyWords }
+            pageThumbnail={ this.props.pageInfo.thumbNail }
+            pagePath={ this.props.pageInfo.path }
+          />
           <div className={this.props.classes.fields}>
             <TextField
               id='skill'

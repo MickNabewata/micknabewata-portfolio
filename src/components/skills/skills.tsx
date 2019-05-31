@@ -3,9 +3,13 @@ import styles from './skillsStyles';
 import withStyles, { WithStyles } from '@material-ui/core/styles/withStyles';
 import SkillCard from '../skillCard/skillCard';
 import { SkillCategory, skills } from '../../datas/skills';
+import { page } from '../../datas/pages';
+import Helmet from '../helmet/helmet';
 
 /** プロパティ型定義 */
 interface Prop extends WithStyles<typeof styles> {
+  /** ページ情報 */
+  pageInfo : page,
   /** ナビゲーション発生時のコールバック */
   navigationHandler? : (url : string) => void
 }
@@ -41,6 +45,13 @@ class Skills extends React.Component<Prop, State> {
 
     return (
         <React.Fragment>
+          <Helmet
+            pageTitle={ this.props.pageInfo.name }
+            pageDescription={ this.props.pageInfo.description }
+            pageKeywords={ this.props.pageInfo.keyWords }
+            pageThumbnail={ this.props.pageInfo.thumbNail }
+            pagePath={ this.props.pageInfo.path }
+          />
           <div className={this.props.classes.contents}>
             {
               (skills.length == 0)? 
